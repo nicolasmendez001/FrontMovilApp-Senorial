@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-service',
@@ -7,8 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ServiceComponent implements OnInit {
 
-  constructor() { }
+  @Input() data: any;
 
-  ngOnInit() {}
+  constructor(private modalCtrl: ModalController) { }
+
+  async close() {
+    await this.modalCtrl.dismiss();
+  }
+
+  ngOnInit() { }
 
 }
