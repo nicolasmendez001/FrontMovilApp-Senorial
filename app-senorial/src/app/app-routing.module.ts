@@ -1,3 +1,6 @@
+import { HelpComponent } from './help/help.component';
+import { AboutUsComponent } from './about-us/about-us.component';
+import { MyServicesComponent } from './my-services/my-services.component';
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
@@ -12,9 +15,17 @@ const routes: Routes = [
     loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
   },
   {
-    path: 'list',
-    loadChildren: () => import('./list/list.module').then(m => m.ListPageModule)
-  }
+    path: 'myServices',
+    component: MyServicesComponent
+  },
+  {
+    path: 'aboutUs',
+    component: AboutUsComponent
+  },
+  {
+    path: 'help',
+    component: HelpComponent
+  },
 ];
 
 @NgModule({

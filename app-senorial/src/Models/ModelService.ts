@@ -1,7 +1,7 @@
 export class ModelService{
-    private id: number;
-    private name: string;
-    private icon: string;
+    public id: number;
+    public name: string;
+    public icon: string;
 
     constructor(id, name, icon){
         this.id = id;
