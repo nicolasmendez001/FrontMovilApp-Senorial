@@ -10,6 +10,22 @@
 </ion-header>
 
 <ion-content>
-  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam alias repudiandae nam in. Consectetur ab ea harum
-    odio quis fugiat recusandae iure obcaecati quam culpa quod magni, odit impedit maiores.</p>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="pendientes">
+        <ion-icon name="clock"></ion-icon>
+        <ion-label>Preguntas fre</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="realizados">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        <ion-label>Realizados</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="cancelados">
+        <ion-icon name="close-circle"></ion-icon>
+        <ion-label>Cancelados</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
 </ion-content>

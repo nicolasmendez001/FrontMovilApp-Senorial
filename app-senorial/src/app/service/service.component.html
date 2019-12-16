@@ -1,11 +1,47 @@
 <ion-header>
   <ion-toolbar color="success">
-    <ion-title>
-      Modal del servicio
-    </ion-title>
-    <ion-button slot="end" (click)="close()">
-      <ion-icon slot="icon-only" name="close">
+
+    <p class="ion-text-center">Solicitud del servicio de</p>
+    <p class="ion-text-center">{{data.name}}</p>
+
+    <ion-button fill="clear" slot="end" (click)="close()">
+      <ion-icon name="close" color="danger">
       </ion-icon>
     </ion-button>
   </ion-toolbar>
 </ion-header>
+
+<ion-content>
+  <ion-card lines="none">
+    <ion-card-header>
+      <ion-label>2. Selecciona la dirección del servicio: </ion-label>
+    </ion-card-header>
+    <ion-card-content>
+      <p *ngIf="directions.length == 0" class="ion-text-center" style="font-size: 60%">*No tiene direcciones registradas</p>
+      <ion-item *ngIf="directions.length > 0" >
+        <ion-button (click)="showPick()">
+          Seleccionar
+          <ion-icon name="arrow-down" slot="end">
+          </ion-icon>
+        </ion-button>
+      </ion-item>
+      <ion-item>
+        <ion-button fill="clear" color="success" (click)="addNewDir()">Añadir nueva dirección
+          <ion-icon name="add" slot="start">
+          </ion-icon>
+        </ion-button>
+      </ion-item>
+
+      <ion-item>
+        <ion-label class="ion-col-12">Dirección: </ion-label>
+        <p class="ion-text-center">{{direction}}</p>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button [disabled]="isValid()" color="success" expand="full" (click) = "next()">
+    Continuar
+    <ion-icon name="arrow-dropright-circle" slot="end">
+    </ion-icon>
+  </ion-button>
+</ion-content>

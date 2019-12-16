@@ -21,16 +21,18 @@ export class HomePage {
 
   private testServices() {
     this.services = new Array<ModelService>();
-    this.services.push(new ModelService(1, "Lavado de auto", "car"));
-    this.services.push(new ModelService(2, "Aseo general", "hand"));
-    this.services.push(new ModelService(3, "Limpieza de piscina", "help-buoy"));
-    this.services.push(new ModelService(4, "Jardineria", "partly-sunny"));
+    this.services.push(new ModelService(1, "Lavado de auto", "car", "secondary"));
+    this.services.push(new ModelService(2, "Aseo general", "contacts", "danger"));
+    this.services.push(new ModelService(3, "Limpieza de piscina", "help-buoy", "medium"));
+    this.services.push(new ModelService(4, "Jardineria", "partly-sunny", "tertiary"));
+    console.log(this.services);
+
   }
 
   private loadServices() {
     this.service.loadServices().subscribe(
       res => {
-      this.services = res;
+        this.services = res;
       },
       error => alert(error)
     );
@@ -40,13 +42,11 @@ export class HomePage {
   /**
    * isSelectService
    */
-  public async isSelectService(id: number) {
-    alert(id);
-
+  public async isSelectService(id: number, name: string) {
     const modal = await this.modalController.create({
       component: ServiceComponent,
-      componentProps:{
-        'data': 1
+      componentProps: {
+        'data': {id, name}
       }
     });
     await modal.present();
