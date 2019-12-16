@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { ModelService } from 'src/Models/ModelService';
 import { ServiceService } from '../services/service/service.service';
-import { error } from 'util';
 import { ServiceComponent } from '../service/service.component';
 import { ModalController } from '@ionic/angular';
 
@@ -12,7 +10,7 @@ import { ModalController } from '@ionic/angular';
 })
 export class HomePage {
 
-  public services: Array<ModelService>;
+  public services: Array<any>;
 
   constructor(private service: ServiceService, public modalController: ModalController) {
     //    this.loadServices();
@@ -20,11 +18,11 @@ export class HomePage {
   }
 
   private testServices() {
-    this.services = new Array<ModelService>();
-    this.services.push(new ModelService(1, "Lavado de auto", "car", "secondary"));
-    this.services.push(new ModelService(2, "Aseo general", "contacts", "danger"));
-    this.services.push(new ModelService(3, "Limpieza de piscina", "help-buoy", "medium"));
-    this.services.push(new ModelService(4, "Jardineria", "partly-sunny", "tertiary"));
+    this.services = new Array<any>();
+    this.services.push({id: 1, name: "Lavado de auto", icon: "car", color: "secondary"});
+    this.services.push({id: 2, name: "Aseo general", icon: "contacts", color: "danger"});
+    this.services.push({id: 3, name: "Limpieza de piscina", icon:"help-buoy", color: "medium"});
+    this.services.push({id: 4, name: "Jardineria", icon: "partly-sunny", color: "tertiary"});
     console.log(this.services);
 
   }

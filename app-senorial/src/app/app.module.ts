@@ -1,3 +1,4 @@
+import { TabsPageModule } from './pages/tabs/tabs.module';
 import { HelpComponent } from './help/help.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { MyServicesComponent } from './my-services/my-services.component';
@@ -13,16 +14,19 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ServiceComponent } from './service/service.component';
+import { TabsPage } from './pages/tabs/tabs.page';
 
 @NgModule({
-  declarations: [AppComponent, ServiceComponent, MyServicesComponent, AboutUsComponent, HelpComponent],
-  entryComponents: [ServiceComponent],
+  declarations: [
+    AppComponent, ServiceComponent, MyServicesComponent, AboutUsComponent, HelpComponent],
+  entryComponents: [ServiceComponent, TabsPage],
 
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    TabsPageModule
   ],
   providers: [
     StatusBar,

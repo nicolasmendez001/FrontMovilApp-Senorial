@@ -1,8 +1,9 @@
+import { TabsPageModule } from './pages/tabs/tabs.module';
 import { HelpComponent } from './help/help.component';
 import { AboutUsComponent } from './about-us/about-us.component';
-import { MyServicesComponent } from './my-services/my-services.component';
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { TabPendientesPage } from './pages/tab-pendientes/tab-pendientes.page';
 
 const routes: Routes = [
   {
@@ -16,7 +17,7 @@ const routes: Routes = [
   },
   {
     path: 'myServices',
-    component: MyServicesComponent
+    loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
     path: 'aboutUs',
@@ -25,7 +26,7 @@ const routes: Routes = [
   {
     path: 'help',
     component: HelpComponent
-  },
+  }
 ];
 
 @NgModule({
