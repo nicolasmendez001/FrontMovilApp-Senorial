@@ -1,9 +1,7 @@
-import { TabsPageModule } from './pages/tabs/tabs.module';
 import { HelpComponent } from './help/help.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { TabPendientesPage } from './pages/tab-pendientes/tab-pendientes.page';
 
 const routes: Routes = [
   {

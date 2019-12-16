@@ -1,4 +1,3 @@
-import { MyServicesComponent } from './../my-services/my-services.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -16,10 +15,6 @@ import { ListPage } from './list.page';
       {
         path: '',
         component: ListPage
-      },
-      {
-        path: 'myService',
-        component: MyServicesComponent
       }
     ])
   ],

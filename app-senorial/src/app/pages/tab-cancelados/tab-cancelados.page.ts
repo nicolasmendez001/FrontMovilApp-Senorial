@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ModelService } from 'src/Models/ModelService';
 
 @Component({
   selector: 'app-tab-cancelados',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TabCanceladosPage implements OnInit {
 
+  public services: Array<ModelService>;
+
   constructor() { }
 
   ngOnInit() {
+    this.services = new Array<ModelService>();
   }
 
 }

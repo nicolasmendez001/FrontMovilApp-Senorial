@@ -1,7 +1,6 @@
 import { TabsPageModule } from './pages/tabs/tabs.module';
 import { HelpComponent } from './help/help.component';
 import { AboutUsComponent } from './about-us/about-us.component';
-import { MyServicesComponent } from './my-services/my-services.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -18,7 +17,7 @@ import { TabsPage } from './pages/tabs/tabs.page';
 
 @NgModule({
   declarations: [
-    AppComponent, ServiceComponent, MyServicesComponent, AboutUsComponent, HelpComponent],
+    AppComponent, ServiceComponent, AboutUsComponent, HelpComponent],
   entryComponents: [ServiceComponent, TabsPage],
 
   imports: [
