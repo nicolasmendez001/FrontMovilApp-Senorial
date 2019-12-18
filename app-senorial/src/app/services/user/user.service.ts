@@ -14,7 +14,7 @@ export class UserService {
     return this.http.get<any[]>(`${APP_URL}/loadDirections/${id}`);
   }
 
-  saveDirection(direction: any): Observable<any>{
-    return this.http.post<any>(`${APP_URL}/saveDirection`, direction);
+  saveDirection(direction: string, idUser): Observable<any>{
+    return this.http.post<any>(`${APP_URL}/saveDirection/${idUser}`, direction);
   }
 }

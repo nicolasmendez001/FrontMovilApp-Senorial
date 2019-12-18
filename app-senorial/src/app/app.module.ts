@@ -1,3 +1,4 @@
+import { RegistryComponent } from './registry/registry.component';
 import { TabsPageModule } from './pages/tabs/tabs.module';
 import { HelpComponent } from './help/help.component';
 import { AboutUsComponent } from './about-us/about-us.component';
@@ -14,10 +15,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ServiceComponent } from './service/service.component';
 import { TabsPage } from './pages/tabs/tabs.page';
+import { Ionic4DatepickerModule } from
+    '@logisticinfotech/ionic4-datepicker';
 
 @NgModule({
   declarations: [
-    AppComponent, ServiceComponent, AboutUsComponent, HelpComponent],
+    AppComponent, ServiceComponent, AboutUsComponent, HelpComponent, RegistryComponent],
   entryComponents: [ServiceComponent, TabsPage],
 
   imports: [
@@ -25,7 +28,8 @@ import { TabsPage } from './pages/tabs/tabs.page';
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
-    TabsPageModule
+    TabsPageModule,
+    Ionic4DatepickerModule
   ],
   providers: [
     StatusBar,

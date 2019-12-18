@@ -19,10 +19,10 @@ export class HomePage {
 
   private testServices() {
     this.services = new Array<any>();
-    this.services.push({id: 1, name: "Lavado de auto", icon: "car", color: "secondary"});
-    this.services.push({id: 2, name: "Aseo general", icon: "contacts", color: "danger"});
-    this.services.push({id: 3, name: "Limpieza de piscina", icon:"help-buoy", color: "medium"});
-    this.services.push({id: 4, name: "Jardineria", icon: "partly-sunny", color: "tertiary"});
+    this.services.push({id_category: 1, name: "Lavado de auto", icon: "car", color: "secondary"});
+    this.services.push({id_category: 2, name: "Aseo general", icon: "contacts", color: "danger"});
+    this.services.push({id_category: 3, name: "Limpieza de piscina", icon:"help-buoy", color: "medium"});
+    this.services.push({id_category: 4, name: "Jardineria", icon: "partly-sunny", color: "tertiary"});
     console.log(this.services);
 
   }
@@ -40,11 +40,11 @@ export class HomePage {
   /**
    * isSelectService
    */
-  public async isSelectService(id: number, name: string) {
+  public async isSelectService(id: number, name: string, valor: number) {
     const modal = await this.modalController.create({
       component: ServiceComponent,
       componentProps: {
-        'data': {id, name}
+        'data': {id, name, valor}
       }
     });
     await modal.present();

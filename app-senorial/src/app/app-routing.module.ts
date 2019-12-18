@@ -1,3 +1,4 @@
+import { RegistryComponent } from './registry/registry.component';
 import { HelpComponent } from './help/help.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { NgModule } from '@angular/core';
@@ -23,7 +24,7 @@ const routes: Routes = [
   },
   {
     path: 'help',
-    component: HelpComponent
+    component: RegistryComponent
   }
 ];
 

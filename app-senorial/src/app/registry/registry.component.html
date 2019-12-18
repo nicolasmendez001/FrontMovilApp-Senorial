@@ -1,0 +1,68 @@
+<ion-header class="header">
+  <ion-toolbar color="success">
+
+    <img src="/assets/icon/icon.png" class="icon" alt="" />
+  </ion-toolbar>
+  <p class="ion-text-center">¿Ya tienes una cuenta?</p>
+  <ion-button size="small" color="warning" expand="block" class="btn" (click)="loginUser()">
+    <ion-icon name="key" slot="start"></ion-icon>
+    Iniciar sesión
+  </ion-button>
+</ion-header>
+
+<ion-content>
+  <ion-card class="registry">
+    <ion-card-header>
+      <ion-card-title class="ion-text-center">REGISTRATE!</ion-card-title>
+    </ion-card-header>
+    <p class="ion-text-center">Por favor ingrese todos los datos!</p>
+    <form #formulario="ngForm" (ngSubmit)="onSubmit()">
+      <ion-list>
+        <ion-item>
+          <ion-label position="floating">Nombres</ion-label>
+          <ion-input type="text" name="nombre" [(ngModel)]="user.nombre" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Apellidos</ion-label>
+          <ion-input [(ngModel)]="user.apellido" name="apellido" type="text" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Tipo de documento</ion-label>
+          <ion-select name="tipoDocumento" [(ngModel)]="user.tipoDocumento" value="" okText="OK" cancelText="Cancelar"
+            required>
+            <ion-select-option value="Cédula de ciudadanía">Cédula de ciudadanía</ion-select-option>
+            <ion-select-option value="Pasaporte">Pasaporte</ion-select-option>
+            <ion-select-option value="Cédula de extranjería">Cédula de extranjería</ion-select-option>
+            <ion-select-option value="NIT">NIT</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">N° de documento</ion-label>
+          <ion-input [(ngModel)]="user.nDocumento" name="nDocumento" type="number" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Teléfono o celular</ion-label>
+          <ion-input [(ngModel)]="user.telefono" name="telefono" type="tel" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Correo</ion-label>
+          <ion-input [(ngModel)]="user.correo" name="correo" type="email"
+            pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Contraseña</ion-label>
+          <ion-input [(ngModel)]="user.contrasena" name="contrasena" type="password" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Confirmar contraseña</ion-label>
+          <ion-input type="password" required></ion-input>
+        </ion-item>
+      </ion-list>
+      <ion-button color="danger" expand="full" type="submit" [disabled]="formulario.invalid">
+        <ion-icon name="redo" slot="start"></ion-icon>
+        Guardar registro
+      </ion-button>
+    </form>
+  </ion-card>
+</ion-content>

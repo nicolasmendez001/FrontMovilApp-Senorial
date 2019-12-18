@@ -17,8 +17,9 @@
       <ion-label>2. Selecciona la dirección del servicio: </ion-label>
     </ion-card-header>
     <ion-card-content>
-      <p *ngIf="directions.length == 0" class="ion-text-center" style="font-size: 60%">*No tiene direcciones registradas</p>
-      <ion-item *ngIf="directions.length > 0" >
+      <p *ngIf="directions.length == 0" class="ion-text-center" style="font-size: 60%">*No tiene direcciones registradas
+      </p>
+      <ion-item *ngIf="directions.length > 0">
         <ion-button (click)="showPick()">
           Seleccionar
           <ion-icon name="arrow-down" slot="end">
@@ -39,7 +40,38 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-button [disabled]="isValid()" color="success" expand="full" (click) = "next()">
+  <ion-card lines="none">
+    <ion-card-header>
+      <ion-label>3. Selecciona la fecha del servicio: </ion-label>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+          <ion-input readonly [(ngModel)]="myDate" [liIonic4Datepicker]="datePickerObj">
+        </ion-input>
+        <ion-icon name="calendar"></ion-icon>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card lines="none">
+    <ion-card-header>
+      <ion-label>4. Ajustes adicionales del servicio: </ion-label>
+    </ion-card-header>
+    <ion-card-content>
+      
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card lines="none">
+    <ion-card-header>
+      <ion-label>5. Observaciones adicionales: </ion-label>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-textarea placeholder="Ingresa aqui..."></ion-textarea>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button [disabled]="isValid()" color="success" expand="full" (click)="next()">
     Continuar
     <ion-icon name="arrow-dropright-circle" slot="end">
     </ion-icon>
