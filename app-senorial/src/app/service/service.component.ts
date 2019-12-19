@@ -15,73 +15,77 @@ export class ServiceComponent implements OnInit {
   public direction: string;
   public directions: Array<String>;
   private p: Array<PickerColumnOption>;
+  public serviceData: any;
+  public selectService: string;
 
-  myDate: String ;
+
+  myDate: String;
 
   constructor(private modalCtrl: ModalController, private pickerCtrl: PickerController,
     private service: UserService) {
-      this.myDate = this.calcualteMinDate(0);
+    this.myDate = this.calcualteMinDate(0);
+    this.serviceData = { title: "Tipo de servicio", opciones: ["4 horas", "8 horas"] };
   }
 
-  private calcualteMinDate(i:number): string {
+  private calcualteMinDate(i: number): string {
     let date = new Date();
-    let fecha = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()+ i}`
+    let fecha = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate() + i}`
     return fecha;
-    
+
   }
 
   sumDays(days: number) {
     var date = new Date();
     date.setDate(date.getDate() + days);
     return date;
-}
+  }
 
   private calculateMaxDate(): string {
     let date = this.sumDays(7);
-    return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
+    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
   }
 
   disabledDates: Date[] = [];
 
-datePickerObj: any = {
-  inputDate: new Date(), // default new Date()
-  fromDate: this.calcualteMinDate(1), // default null
-  toDate: this.calculateMaxDate(), // default null
-  showTodayButton: false, // default true
-  closeOnSelect: true, // default false
-  disableWeekDays: [], // default []
-  mondayFirst: true, // default false
-  setLabel: 'S',  // default 'Set'
-  todayLabel: 'T', // default 'Today'
-  closeLabel: 'Cancelar', // default 'Close'
-  disabledDates: this.disabledDates, // default []
-  titleLabel: 'Fecha del servicio', // default null
-  monthsList: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
-  weeksList: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
-  dateFormat: 'YYYY-MM-DD', // default DD MMM YYYY
-  clearButton : false , // default true
-  momentLocale: 'en-US', // Default 'en-US'
-  yearInAscending: true, // Default false
-  btnCloseSetInReverse: false, // Default false
-  btnProperties: {
-    expand: 'block', // Default 'block'
-    fill: '', // Default 'solid'
-    size: '', // Default 'default'
-    disabled: '', // Default false
-    strong: '', // Default false
-    color: '' // Default ''
-  },
-  arrowNextPrev: {
-    nextArrowSrc: '/assets/derecha.svg',
-    prevArrowSrc: '/assets/izquierda.svg'
-  }, // This object supports only SVG files.
-  highlightedDates: [
-   
-  ], // Default [],
-  isSundayHighlighted : {
-   //fontColor: '#ee88bf' // Default null
-  } // Default {}
-};
+  datePickerObj: any = {
+    inputDate: new Date(), // default new Date()
+    fromDate: this.calcualteMinDate(1), // default null
+    toDate: this.calculateMaxDate(), // default null
+    showTodayButton: false, // default true
+    closeOnSelect: true, // default false
+    disableWeekDays: [], // default []
+    mondayFirst: true, // default false
+    setLabel: 'S',  // default 'Set'
+    todayLabel: 'T', // default 'Today'
+    closeLabel: 'Cancelar', // default 'Close'
+    disabledDates: this.disabledDates, // default []
+    titleLabel: 'Fecha del servicio', // default null
+    monthsList: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+    weeksList: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
+    dateFormat: 'YYYY-MM-DD', // default DD MMM YYYY
+    clearButton: false, // default true
+    momentLocale: 'en-US', // Default 'en-US'
+    yearInAscending: true, // Default false
+    btnCloseSetInReverse: false, // Default false
+    btnProperties: {
+      expand: 'block', // Default 'block'
+      fill: '', // Default 'solid'
+      size: '', // Default 'default'
+      disabled: '', // Default false
+      strong: '', // Default false
+      color: '' // Default ''
+    },
+    arrowNextPrev: {
+      nextArrowSrc: '/assets/derecha.svg',
+      prevArrowSrc: '/assets/izquierda.svg'
+    }, // This object supports only SVG files.
+    highlightedDates: [
+
+    ], // Default [],
+    isSundayHighlighted: {
+      //fontColor: '#ee88bf' // Default null
+    } // Default {}
+  };
 
   async close() {
     await this.modalCtrl.dismiss();
@@ -147,7 +151,6 @@ datePickerObj: any = {
 
     let picker = await this.pickerCtrl.create(ops);
     picker.present();
-
     picker.onDidDismiss().then(async data => {
       let col = await picker.getColumn('direction');
       if (!cancel) {
@@ -167,13 +170,13 @@ datePickerObj: any = {
    * isValid
    */
   public isValid(): boolean {
-    return (this.direction == "");
+    return this.direction == "" || (typeof this.selectService === 'undefined');
   }
 
   /**
    * next
    */
   public next() {
-    alert("siguiente paso");
+    alert(this.selectService);
   }
 }

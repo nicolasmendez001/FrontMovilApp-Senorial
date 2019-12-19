@@ -40,11 +40,11 @@ export class HomePage {
   /**
    * isSelectService
    */
-  public async isSelectService(id: number, name: string, valor: number) {
+  public async isSelectService(id: number, name: string) {
     const modal = await this.modalController.create({
       component: ServiceComponent,
       componentProps: {
-        'data': {id, name, valor}
+        'data': {id, name}
       }
     });
     await modal.present();

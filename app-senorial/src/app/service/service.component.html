@@ -46,7 +46,7 @@
     </ion-card-header>
     <ion-card-content>
       <ion-item>
-          <ion-input readonly [(ngModel)]="myDate" [liIonic4Datepicker]="datePickerObj">
+        <ion-input readonly [(ngModel)]="myDate" [liIonic4Datepicker]="datePickerObj">
         </ion-input>
         <ion-icon name="calendar"></ion-icon>
       </ion-item>
@@ -57,8 +57,21 @@
     <ion-card-header>
       <ion-label>4. Ajustes adicionales del servicio: </ion-label>
     </ion-card-header>
+    <ion-list>
+      <ion-radio-group [(ngModel)]="selectService">
+        <ion-list-header>
+          <ion-label>{{serviceData.title}}</ion-label>
+        </ion-list-header>
+        <ion-list *ngFor="let item of serviceData.opciones">
+          <ion-item>
+            <ion-label>{{item}}</ion-label>
+            <ion-radio slot="start" [value]="item"></ion-radio>
+          </ion-item>
+        </ion-list>
+      </ion-radio-group>
+    </ion-list>
     <ion-card-content>
-      
+
     </ion-card-content>
   </ion-card>
 
