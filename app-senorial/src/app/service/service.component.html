@@ -2,7 +2,7 @@
   <ion-toolbar color="success">
 
     <p class="ion-text-center">Solicitud del servicio de</p>
-    <p class="ion-text-center">{{data.name}}</p>
+    <p class="ion-text-center">{{dataModal.name}}</p>
 
     <ion-button fill="clear" slot="end" (click)="close()">
       <ion-icon name="close" color="danger">
@@ -35,7 +35,7 @@
 
       <ion-item>
         <ion-label class="ion-col-12">Dirección: </ion-label>
-        <p class="ion-text-center">{{direction}}</p>
+        <p class="ion-text-center">{{serviceData.direccion}}</p>
       </ion-item>
     </ion-card-content>
   </ion-card>
@@ -46,7 +46,7 @@
     </ion-card-header>
     <ion-card-content>
       <ion-item>
-        <ion-input readonly [(ngModel)]="myDate" [liIonic4Datepicker]="datePickerObj">
+        <ion-input readonly [(ngModel)]="serviceData.fecha_servicio" (ngModelChange) ="changeDate()" [liIonic4Datepicker]="datePickerObj">
         </ion-input>
         <ion-icon name="calendar"></ion-icon>
       </ion-item>
@@ -55,14 +55,30 @@
 
   <ion-card lines="none">
     <ion-card-header>
-      <ion-label>4. Ajustes adicionales del servicio: </ion-label>
+      <ion-label>4. Horario del servicio: </ion-label>
+    </ion-card-header>
+    <ion-radio-group [(ngModel)]="serviceData.horario">
+      <ion-list *ngFor="let item of jornadaData">
+        <ion-item>
+          <ion-label>{{item}}</ion-label>
+          <ion-radio slot="start" [value]="item"></ion-radio>
+        </ion-item>
+      </ion-list>
+    </ion-radio-group>
+    <ion-card-content>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card lines="none">
+    <ion-card-header>
+      <ion-label>5. Ajustes adicionales del servicio: </ion-label>
     </ion-card-header>
     <ion-list>
       <ion-radio-group [(ngModel)]="selectService">
         <ion-list-header>
-          <ion-label>{{serviceData.title}}</ion-label>
+          <ion-label>{{serviceOption.title}}</ion-label>
         </ion-list-header>
-        <ion-list *ngFor="let item of serviceData.opciones">
+        <ion-list *ngFor="let item of serviceOption.opciones">
           <ion-item>
             <ion-label>{{item}}</ion-label>
             <ion-radio slot="start" [value]="item"></ion-radio>
@@ -71,7 +87,6 @@
       </ion-radio-group>
     </ion-list>
     <ion-card-content>
-
     </ion-card-content>
   </ion-card>
 
@@ -80,7 +95,7 @@
       <ion-label>5. Observaciones adicionales: </ion-label>
     </ion-card-header>
     <ion-card-content>
-      <ion-textarea placeholder="Ingresa aqui..."></ion-textarea>
+      <ion-textarea [(ngModel)] ="serviceData.observacion" placeholder="Ingresa aqui..."></ion-textarea>
     </ion-card-content>
   </ion-card>
 

@@ -13,16 +13,17 @@ export class HomePage {
   public services: Array<any>;
 
   constructor(private service: ServiceService, public modalController: ModalController) {
-    //    this.loadServices();
-    this.testServices();
+    this.services = new Array<any>();
+    this.loadServices();
+    //this.testServices();
   }
 
   private testServices() {
     this.services = new Array<any>();
-    this.services.push({id_category: 1, name: "Lavado de auto", icon: "car", color: "secondary"});
-    this.services.push({id_category: 2, name: "Aseo general", icon: "contacts", color: "danger"});
-    this.services.push({id_category: 3, name: "Limpieza de piscina", icon:"help-buoy", color: "medium"});
-    this.services.push({id_category: 4, name: "Jardineria", icon: "partly-sunny", color: "tertiary"});
+    this.services.push({ id_category: 1, name: "Lavado de auto", icon: "car", color: "secondary" });
+    this.services.push({ id_category: 2, name: "Aseo general", icon: "contacts", color: "danger" });
+    this.services.push({ id_category: 3, name: "Limpieza de piscina", icon: "help-buoy", color: "medium" });
+    this.services.push({ id_category: 4, name: "Jardineria", icon: "partly-sunny", color: "tertiary" });
     console.log(this.services);
 
   }
@@ -30,11 +31,18 @@ export class HomePage {
   private loadServices() {
     this.service.loadServices().subscribe(
       res => {
-        this.services = res;
+        if (res['responseCode'] == 200) {
+          this.services = res['object'];
+          console.log(this.services);
+          
+        } else {
+          alert("Ocurrio un error");
+        }
       },
-      error => alert(error)
+      error =>
+        console.log(error)
     );
-
+    //this.service.disconect();
   }
 
   /**
@@ -44,7 +52,7 @@ export class HomePage {
     const modal = await this.modalController.create({
       component: ServiceComponent,
       componentProps: {
-        'data': {id, name}
+        'dataModal': { id, name }
       }
     });
     await modal.present();

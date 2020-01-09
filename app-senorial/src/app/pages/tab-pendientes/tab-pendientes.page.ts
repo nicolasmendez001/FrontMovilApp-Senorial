@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModelService } from 'src/Models/ModelService';
+import { ServiceService } from 'src/app/services/service/service.service';
 
 @Component({
   selector: 'app-tab-pendientes',
@@ -7,16 +8,29 @@ import { ModelService } from 'src/Models/ModelService';
   styleUrls: ['./tab-pendientes.page.scss'],
 })
 export class TabPendientesPage implements OnInit {
-  
+
   public services: Array<any>;
 
-  constructor() { }
+  constructor(private service: ServiceService) { }
 
   ngOnInit() {
-    this.services = [
-      {nombreCategoria: "Aseo General", direccion: "Calle juarez", fecha_servicio:"20-12-2019", tipoServicio:"4 horas", valor: 20000},
-      {nombreCategoria: "Aseo General", direccion: "Calle juarez", fecha_servicio:"20-12-2019", tipoServicio:"4 horas", valor: 25000},
-      {nombreCategoria: "Aseo General", direccion: "Calle juarez", fecha_servicio:"20-12-2019", tipoServicio:"4 horas", valor: 32000}
-  ];
+    this.services = new Array<any>();
+    this.loadPendientes();
+  }
+
+  private loadPendientes() {
+    this.service.loadPendientes().subscribe(
+      res => {
+        console.log(res);
+        if (res['responseCode'] == 200) {
+          this.services = res['object'];
+        } else {
+          alert("Ocurrio un error");
+        }
+      },
+      error =>
+        console.log(error)
+    );
+    //this.service.disconect();
   }
 }

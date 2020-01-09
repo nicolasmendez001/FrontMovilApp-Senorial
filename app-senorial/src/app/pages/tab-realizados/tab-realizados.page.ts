@@ -1,5 +1,6 @@
 import { ModelService } from 'src/Models/ModelService';
 import { Component, OnInit } from '@angular/core';
+import { ServiceService } from 'src/app/services/service/service.service';
 
 @Component({
   selector: 'app-tab-realizados',
@@ -11,32 +12,42 @@ export class TabRealizadosPage implements OnInit {
   public services: Array<any>;
   public comment: String = "";
 
-  constructor() { }
+  constructor(private service: ServiceService) { }
 
   ngOnInit() {
-    this.services = [
-      {nombreCategoria: "Aseo General", direccion: "Calle juarez", fecha_servicio:"20-12-2019", tipoServicio:"4 horas", valor: 20000, comentario:""},
-      {nombreCategoria: "Aseo General", direccion: "Calle juarez", fecha_servicio:"20-12-2019", tipoServicio:"4 horas", valor: 25000, comentario:"Es muy buen servicio, todos los trabajadores son super..."},
-      {nombreCategoria: "Aseo General", direccion: "Calle juarez", fecha_servicio:"20-12-2019", tipoServicio:"4 horas", valor: 32000, comentario:"", addCommend: false}
-  ];
+    this.services = new Array<any>();
+    this.loadRealizados();
   }
 
-  btnAddComment(item){
+  private loadRealizados() {
+    this.service.loadRealizados().subscribe(
+      res => {
+        console.log(res);
+        if (res['responseCode'] == 200) {
+          this.services = res['object'];
+        } else {
+          alert("Ocurrio un error");
+        }
+      },
+      error =>
+        console.log(error)
+    );
+    //this.service.disconect();
+  }
+
+  btnAddComment(item) {
     if (item.addComment) {
       item.addComment = false;
-    }else{
+    } else {
       item.addComment = true;
     }
 
   }
 
-  saveComment(item){
+  saveComment(item) {
     console.log("Item", item);
-    
     item.comentario = this.comment;
+    //this.service.saveComment(item.id_service, this.comment);
     this.comment = "";
-    console.log(this.services);
-    
   }
-
 }

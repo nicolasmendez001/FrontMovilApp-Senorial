@@ -26,20 +26,12 @@
           <ion-label position="floating">Apellidos</ion-label>
           <ion-input [(ngModel)]="user.apellido" name="apellido" type="text" required></ion-input>
         </ion-item>
+
         <ion-item>
-          <ion-label position="floating">Tipo de documento</ion-label>
-          <ion-select name="tipoDocumento" [(ngModel)]="user.tipoDocumento" value="" okText="OK" cancelText="Cancelar"
-            required>
-            <ion-select-option value="Cédula de ciudadanía">Cédula de ciudadanía</ion-select-option>
-            <ion-select-option value="Pasaporte">Pasaporte</ion-select-option>
-            <ion-select-option value="Cédula de extranjería">Cédula de extranjería</ion-select-option>
-            <ion-select-option value="NIT">NIT</ion-select-option>
-          </ion-select>
+          <ion-label position="floating">Edad</ion-label>
+          <ion-input [(ngModel)]="user.edad" name="edad" type="number" required></ion-input>
         </ion-item>
-        <ion-item>
-          <ion-label position="floating">N° de documento</ion-label>
-          <ion-input [(ngModel)]="user.nDocumento" name="nDocumento" type="number" required></ion-input>
-        </ion-item>
+       
         <ion-item>
           <ion-label position="floating">Teléfono o celular</ion-label>
           <ion-input [(ngModel)]="user.telefono" name="telefono" type="tel" required></ion-input>
@@ -56,7 +48,7 @@
         </ion-item>
         <ion-item>
           <ion-label position="floating">Confirmar contraseña</ion-label>
-          <ion-input type="password" required></ion-input>
+          <ion-input [(ngModel)]="pass" name="confirmContrasena" type="password" required ></ion-input>
         </ion-item>
       </ion-list>
       <ion-button color="danger" expand="full" type="submit" [disabled]="formulario.invalid">

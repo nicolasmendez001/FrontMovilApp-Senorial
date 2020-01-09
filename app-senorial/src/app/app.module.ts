@@ -1,3 +1,4 @@
+import { LoginComponent } from './login/login.component';
 import { RegistryComponent } from './registry/registry.component';
 import { TabsPageModule } from './pages/tabs/tabs.module';
 import { HelpComponent } from './help/help.component';
@@ -17,11 +18,16 @@ import { ServiceComponent } from './service/service.component';
 import { TabsPage } from './pages/tabs/tabs.page';
 import { Ionic4DatepickerModule } from
     '@logisticinfotech/ionic4-datepicker';
+import { SocketIoModule, SocketIoConfig} from 'ngx-socket-io';
+import { APP_URL } from './constants';
+
+const config : SocketIoConfig = {url: APP_URL, options: {}};
 
 @NgModule({
   declarations: [
-    AppComponent, ServiceComponent, AboutUsComponent, HelpComponent, RegistryComponent],
-  entryComponents: [ServiceComponent, TabsPage],
+    AppComponent, ServiceComponent, AboutUsComponent, HelpComponent, RegistryComponent, LoginComponent],
+  entryComponents: [ServiceComponent, TabsPage, LoginComponent],
+
 
   imports: [
     BrowserModule,
@@ -29,7 +35,8 @@ import { Ionic4DatepickerModule } from
     AppRoutingModule,
     HttpClientModule,
     TabsPageModule,
-    Ionic4DatepickerModule
+    Ionic4DatepickerModule,
+    SocketIoModule.forRoot(config)
   ],
   providers: [
     StatusBar,

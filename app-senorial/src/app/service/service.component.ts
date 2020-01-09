@@ -1,7 +1,8 @@
 import { UserService } from './../services/user/user.service';
 import { Component, OnInit, Input } from '@angular/core';
-import { ModalController, PickerController } from '@ionic/angular';
+import { ModalController, PickerController, AlertController } from '@ionic/angular';
 import { PickerOptions, PickerColumnOption } from '@ionic/core';
+import { ModelService } from 'src/Models/ModelService';
 
 @Component({
   selector: 'app-service',
@@ -10,21 +11,21 @@ import { PickerOptions, PickerColumnOption } from '@ionic/core';
 })
 export class ServiceComponent implements OnInit {
 
-  @Input() data: any;
+  @Input() dataModal: any;
 
-  public direction: string;
+ // public direction: string;
   public directions: Array<String>;
-  private p: Array<PickerColumnOption>;
-  public serviceData: any;
+  //private p: Array<PickerColumnOption>;
+  public serviceOption: any;
   public selectService: string;
-
-
-  myDate: String;
+ // public jornadaSelect: string;
+  public jornadaData: Array<string>;
+  //myDate: string;
+  public serviceData: ModelService;
 
   constructor(private modalCtrl: ModalController, private pickerCtrl: PickerController,
-    private service: UserService) {
-    this.myDate = this.calcualteMinDate(0);
-    this.serviceData = { title: "Tipo de servicio", opciones: ["4 horas", "8 horas"] };
+    private service: UserService, private alertController: AlertController) {
+    
   }
 
   private calcualteMinDate(i: number): string {
@@ -49,7 +50,7 @@ export class ServiceComponent implements OnInit {
 
   datePickerObj: any = {
     inputDate: new Date(), // default new Date()
-    fromDate: this.calcualteMinDate(1), // default null
+    fromDate: this.calcualteMinDate(0), // default null
     toDate: this.calculateMaxDate(), // default null
     showTodayButton: false, // default true
     closeOnSelect: true, // default false
@@ -92,9 +93,22 @@ export class ServiceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.direction = "";
+    this.serviceData = new ModelService(1,"Juan carlos", "Perez", "3112664704", "mnikolas001@hotmail.com", this.dataModal.name);
+    this.serviceData.fecha_servicio = this.calcualteMinDate(0);
+    this.serviceData.fecha = this.calcualteMinDate(0);
+    this.serviceOption = { title: "Tipo de servicio", opciones: ["4 horas", "8 horas"] };
+    this.jornadaData = new Array<string>();
     this.directions = new Array<string>();
     this.loadDirections();
+    this.loadJornada(new Date());
+  }
+
+  private loadJornada(date: Date) {
+    if (date.getHours() < 12) {
+      this.jornadaData = ["Mañana", "Tarde"];
+    } else {
+      this.jornadaData = ["Tarde"];
+    }
   }
 
   private loadDirections() {
@@ -154,7 +168,7 @@ export class ServiceComponent implements OnInit {
     picker.onDidDismiss().then(async data => {
       let col = await picker.getColumn('direction');
       if (!cancel) {
-        this.direction = col.options[col.selectedIndex].text;
+        this.serviceData.direccion = col.options[col.selectedIndex].text;
       }
     });
   }
@@ -163,14 +177,58 @@ export class ServiceComponent implements OnInit {
    * addNewDir
    */
   public addNewDir() {
-    alert("añadir nueva direccion");
+    this.presentAlert();
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create(
+      {
+        header: 'Añadir nueva dirección',
+        // subHeader: 'Subtitle',
+        //message: 'This is an alert message.',
+        inputs: [
+          {
+            name: 'direction',
+            placeholder: '*Dirección'
+          }
+        ],
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: () => {
+              console.log('Confirm Cancel');
+            }
+          }, {
+            text: 'Ok',
+            handler: data => {
+             // this.saveDirection(data.direction);
+             
+             this.serviceData.direccion = data.direction;
+            }
+          }
+        ]
+      });
+    await alert.present();
+  }
+
+  private saveDirection(direction: string){
+    this.service.saveDirection(direction, 1).subscribe(
+      res => {
+        this.serviceData.direccion = direction;
+      },
+      error=>{
+        alert("Error al guardar");
+      }
+    );
   }
 
   /**
    * isValid
    */
   public isValid(): boolean {
-    return this.direction == "" || (typeof this.selectService === 'undefined');
+    return this.serviceData.direccion == "" || (typeof this.selectService === 'undefined');
   }
 
   /**
@@ -178,5 +236,21 @@ export class ServiceComponent implements OnInit {
    */
   public next() {
     alert(this.selectService);
+    console.log(this.serviceData);
+    
+  }
+
+  /**
+   * changeDate
+   */
+  public changeDate() {
+    let date = new Date(this.serviceData.fecha_servicio);
+    let hoy = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate() + 1}`;
+    let otra = new Date();
+    if (hoy == `${otra.getFullYear()}-${otra.getMonth() + 1}-${otra.getDate()}`) {
+      this.loadJornada(otra);
+    } else {
+      this.jornadaData = ["Mañana", "Tarde"];
+    }
   }
 }
