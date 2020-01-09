@@ -1,6 +1,7 @@
+import { AlertService } from './../services/Alert/alert.service';
 import { UserService } from './../services/user/user.service';
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController} from '@ionic/angular';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,25 +11,31 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private modalCtrl: ModalController, private service: UserService, private router: Router) { }
+  constructor(private modalCtrl: ModalController, private service: UserService, private router: Router,
+    private alert: AlertService) { }
 
   ngOnInit() { }
 
   login(form) {
     console.log(form.value);
-    this.service.loginUser(form.value).subscribe(async res => {
-      if (res['responseCode'] == 200) {
-        alert("Logeado");
-        await this.modalCtrl.dismiss();
-        this.router.navigate(["/home"]);
-      } else {
-        alert("Ocurrio un error");
-      }
-    },
+    this.service.loginUser(form.value).subscribe(
+      async res => {
+        console.log(res);
+
+        if (res['responseCode'] == 200) {
+          this.alert.presentToast("Sesión iniciada", "success");
+          await this.modalCtrl.dismiss();
+          this.router.navigate(["/home"]);
+        } else {
+          this.alert.presentToast("error al login", "danger");
+        }
+      },
       error =>
         console.log(error)
     );
   }
+
+  
 
   async close() {
     await this.modalCtrl.dismiss();

@@ -74,13 +74,13 @@
       <ion-label>5. Ajustes adicionales del servicio: </ion-label>
     </ion-card-header>
     <ion-list>
-      <ion-radio-group [(ngModel)]="selectService">
+      <ion-radio-group [(ngModel)]="serviceData.tipoServicio">
         <ion-list-header>
-          <ion-label>{{serviceOption.title}}</ion-label>
+          <ion-label>{{dataModal.services.title}}</ion-label>
         </ion-list-header>
-        <ion-list *ngFor="let item of serviceOption.opciones">
+        <ion-list *ngFor="let item of dataModal.services.opciones">
           <ion-item>
-            <ion-label>{{item}}</ion-label>
+            <ion-label>{{item.nombre}}</ion-label>
             <ion-radio slot="start" [value]="item"></ion-radio>
           </ion-item>
         </ion-list>

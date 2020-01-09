@@ -26,5 +26,4 @@ export class UserService {
   loginUser(user: JSON){
     return this.http.post(`${APP_URL}/loginUser`, user);
   }
-
 }

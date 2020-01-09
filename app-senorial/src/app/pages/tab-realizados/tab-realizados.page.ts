@@ -1,3 +1,4 @@
+import { AlertService } from './../../services/Alert/alert.service';
 import { ModelService } from 'src/Models/ModelService';
 import { Component, OnInit } from '@angular/core';
 import { ServiceService } from 'src/app/services/service/service.service';
@@ -12,7 +13,7 @@ export class TabRealizadosPage implements OnInit {
   public services: Array<any>;
   public comment: String = "";
 
-  constructor(private service: ServiceService) { }
+  constructor(private service: ServiceService, private alert: AlertService) { }
 
   ngOnInit() {
     this.services = new Array<any>();
@@ -20,7 +21,7 @@ export class TabRealizadosPage implements OnInit {
   }
 
   private loadRealizados() {
-    this.service.loadRealizados().subscribe(
+    this.service.getServices(1, "realizado").subscribe(
       res => {
         console.log(res);
         if (res['responseCode'] == 200) {
@@ -47,7 +48,18 @@ export class TabRealizadosPage implements OnInit {
   saveComment(item) {
     console.log("Item", item);
     item.comentario = this.comment;
-    //this.service.saveComment(item.id_service, this.comment);
+    this.service.saveComment(item.id_service, this.comment).subscribe(
+      async res => {
+        console.log(res);
+        if (res['status'] == 200) {
+          this.alert.presentToast("El comentario fué guardado ", "success");
+        } else {
+          this.alert.presentToast("error al guardad comentario", "danger");
+        }
+      },
+      error =>
+        console.log(error)
+    );
     this.comment = "";
   }
 }

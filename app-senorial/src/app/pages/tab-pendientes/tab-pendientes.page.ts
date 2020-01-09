@@ -19,18 +19,15 @@ export class TabPendientesPage implements OnInit {
   }
 
   private loadPendientes() {
-    this.service.loadPendientes().subscribe(
+    this.service.getServices(1, "pendiente").subscribe(
       res => {
         console.log(res);
         if (res['responseCode'] == 200) {
           this.services = res['object'];
-        } else {
-          alert("Ocurrio un error");
-        }
+        } 
       },
       error =>
         console.log(error)
     );
-    //this.service.disconect();
   }
 }

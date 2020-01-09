@@ -9,7 +9,7 @@ import { Socket } from 'ngx-socket-io';
   providedIn: 'root'
 })
 export class ServiceService {
-  
+
   constructor(private http: HttpClient, private socket: Socket) {
     this.socket.connect();
   }
@@ -22,16 +22,22 @@ export class ServiceService {
     return this.http.get<ModelService>(`${APP_URL}/getService/${id}`);
   }
 
-  public loadRealizados(): Observable<JSON[]> {
-    return this.http.get<JSON[]>(`${APP_URL}/realizados`);
+  getServices(id: number, estado: string) {
+    return this.http.get<JSON[]>(`${APP_URL}/serviciosUsuario/${id}/${estado}`);
   }
 
-  public loadPendientes(): Observable<JSON[]> {
-    return this.http.get<JSON[]>(`${APP_URL}/pendientes`);
+  saveComment(id_service: number, comment: String) {
+    console.log("Este es el id: " + id_service);
+    
+   return this.http.put(`${APP_URL}/saveCommente`, { id: id_service, comentario: comment });
   }
 
-  saveComment(id_service: any, comment: String) {
-    this.http.post(`${APP_URL}/saveCommente`, {id: id_service, comment: comment});
+  /**
+   * saveService
+   */
+  public saveService(service: ModelService): Observable<JSON> {
+    //service
+    return this.http.post<JSON>(`${APP_URL}/service`, service);
   }
 
   /**

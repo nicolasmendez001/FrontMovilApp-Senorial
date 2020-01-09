@@ -33,6 +33,7 @@ export class ModelService {
         this.fecha = "";
         this.nombreCategoria = nombreCategoria;
         this.comentario = "";
+        this.tipoServicio = "";
         this.observacion = "";
     }
 

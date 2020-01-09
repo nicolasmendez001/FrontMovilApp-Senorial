@@ -34,7 +34,7 @@ export class HomePage {
         if (res['responseCode'] == 200) {
           this.services = res['object'];
           console.log(this.services);
-          
+
         } else {
           alert("Ocurrio un error");
         }
@@ -48,11 +48,11 @@ export class HomePage {
   /**
    * isSelectService
    */
-  public async isSelectService(id: number, name: string) {
+  public async isSelectService(services: any, id: number, name: string) {
     const modal = await this.modalController.create({
       component: ServiceComponent,
       componentProps: {
-        'dataModal': { id, name }
+        'dataModal': { id, name, services }
       }
     });
     await modal.present();

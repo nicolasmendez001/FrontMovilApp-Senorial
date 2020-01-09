@@ -27,7 +27,7 @@
     </ion-card-header>
     <ion-card-content>
       <ion-list *ngFor="let item of services">
-        <ion-button [color]="item.color" expand="full"  class="btn"  (click)="isSelectService(item.id_category, item.name)">
+        <ion-button [color]="item.color" expand="full"  class="btn"  (click)="isSelectService(item.servicios, item.id_category, item.name)">
           <ion-icon [name]="item.icon" slot="start"></ion-icon>
           {{item.name}}
         </ion-button>

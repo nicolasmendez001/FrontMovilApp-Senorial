@@ -1,3 +1,4 @@
+import { ServiceService } from 'src/app/services/service/service.service';
 import { UserService } from './../services/user/user.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalController, PickerController, AlertController } from '@ionic/angular';
@@ -13,26 +14,19 @@ export class ServiceComponent implements OnInit {
 
   @Input() dataModal: any;
 
- // public direction: string;
   public directions: Array<String>;
-  //private p: Array<PickerColumnOption>;
-  public serviceOption: any;
   public selectService: string;
- // public jornadaSelect: string;
   public jornadaData: Array<string>;
-  //myDate: string;
   public serviceData: ModelService;
 
   constructor(private modalCtrl: ModalController, private pickerCtrl: PickerController,
-    private service: UserService, private alertController: AlertController) {
-    
+    private serviceUser: UserService, private serviceSer: ServiceService, private alertController: AlertController) {
   }
 
   private calcualteMinDate(i: number): string {
     let date = new Date();
     let fecha = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate() + i}`
     return fecha;
-
   }
 
   sumDays(days: number) {
@@ -93,10 +87,10 @@ export class ServiceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.serviceData = new ModelService(1,"Juan carlos", "Perez", "3112664704", "mnikolas001@hotmail.com", this.dataModal.name);
+    console.log(this.dataModal);
+    this.serviceData = new ModelService(1, "Juan carlos", "Perez", "3112664704", "mnikolas001@hotmail.com", this.dataModal.name);
     this.serviceData.fecha_servicio = this.calcualteMinDate(0);
     this.serviceData.fecha = this.calcualteMinDate(0);
-    this.serviceOption = { title: "Tipo de servicio", opciones: ["4 horas", "8 horas"] };
     this.jornadaData = new Array<string>();
     this.directions = new Array<string>();
     this.loadDirections();
@@ -203,9 +197,9 @@ export class ServiceComponent implements OnInit {
           }, {
             text: 'Ok',
             handler: data => {
-             // this.saveDirection(data.direction);
-             
-             this.serviceData.direccion = data.direction;
+              // this.saveDirection(data.direction);
+
+              this.serviceData.direccion = data.direction;
             }
           }
         ]
@@ -213,12 +207,12 @@ export class ServiceComponent implements OnInit {
     await alert.present();
   }
 
-  private saveDirection(direction: string){
-    this.service.saveDirection(direction, 1).subscribe(
+  private saveDirection(direction: string) {
+    this.serviceUser.saveDirection(direction, 1).subscribe(
       res => {
         this.serviceData.direccion = direction;
       },
-      error=>{
+      error => {
         alert("Error al guardar");
       }
     );
@@ -228,16 +222,21 @@ export class ServiceComponent implements OnInit {
    * isValid
    */
   public isValid(): boolean {
-    return this.serviceData.direccion == "" || (typeof this.selectService === 'undefined');
+    return (this.serviceData.direccion == "" || this.serviceData.tipoServicio == "" || this.serviceData.horario == "");
   }
 
   /**
    * next
    */
   public next() {
-    alert(this.selectService);
-    console.log(this.serviceData);
-    
+    this.serviceSer.saveService(this.serviceData).subscribe(
+      res => {
+        console.log(res);
+      },
+      error => {
+        alert("Error a guardar");
+      }
+    );
   }
 
   /**
