@@ -52,7 +52,7 @@ export class TabRealizadosPage implements OnInit {
       async res => {
         console.log(res);
         if (res['status'] == 200) {
-          this.alert.presentToast("El comentario fué guardado ", "success");
+          this.alert.presentToast("El comentario fué guardado ", "warning");
         } else {
           this.alert.presentToast("error al guardad comentario", "danger");
         }

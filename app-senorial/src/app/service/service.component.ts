@@ -1,9 +1,11 @@
+import { AlertService } from './../services/Alert/alert.service';
 import { ServiceService } from 'src/app/services/service/service.service';
 import { UserService } from './../services/user/user.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalController, PickerController, AlertController } from '@ionic/angular';
 import { PickerOptions, PickerColumnOption } from '@ionic/core';
 import { ModelService } from 'src/Models/ModelService';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-service',
@@ -20,7 +22,8 @@ export class ServiceComponent implements OnInit {
   public serviceData: ModelService;
 
   constructor(private modalCtrl: ModalController, private pickerCtrl: PickerController,
-    private serviceUser: UserService, private serviceSer: ServiceService, private alertController: AlertController) {
+    private serviceUser: UserService, private serviceSer: ServiceService, private alertController: AlertController,
+    private alert: AlertService, private router: Router) {
   }
 
   private calcualteMinDate(i: number): string {
@@ -197,9 +200,7 @@ export class ServiceComponent implements OnInit {
           }, {
             text: 'Ok',
             handler: data => {
-              // this.saveDirection(data.direction);
-
-              this.serviceData.direccion = data.direction;
+              this.saveDirection(data.direction);
             }
           }
         ]
@@ -208,8 +209,11 @@ export class ServiceComponent implements OnInit {
   }
 
   private saveDirection(direction: string) {
-    this.serviceUser.saveDirection(direction, 1).subscribe(
+    this.serviceUser.saveDirection(direction, 0).subscribe(
       res => {
+        console.log("Eviar direccion",res);
+        
+        this.alert.presentToast("La dirección fue guardada", "warning");
         this.serviceData.direccion = direction;
       },
       error => {
@@ -231,7 +235,9 @@ export class ServiceComponent implements OnInit {
   public next() {
     this.serviceSer.saveService(this.serviceData).subscribe(
       res => {
-        console.log(res);
+        this.alert.presentSaveService("Servicio enviado",
+        "RECIBIRÁ UNA LLAMADA PARA CONFIRMAR","success", 'bottom');
+        this.modalCtrl.dismiss();
       },
       error => {
         alert("Error a guardar");

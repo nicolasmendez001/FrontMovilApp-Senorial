@@ -27,9 +27,7 @@ export class ServiceService {
   }
 
   saveComment(id_service: number, comment: String) {
-    console.log("Este es el id: " + id_service);
-    
-   return this.http.put(`${APP_URL}/saveCommente`, { id: id_service, comentario: comment });
+   return this.http.put(`${APP_URL}/saveComment`, { id: id_service, comentario: comment });
   }
 
   /**

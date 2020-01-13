@@ -19,7 +19,7 @@ export class TabCanceladosPage implements OnInit {
   }
 
   private loadServices() {
-    this.service.getServices(1, "cancelado").subscribe(
+    this.service.getServices(1, "rechazado").subscribe(
       res => {
         console.log(res);
         if (res['responseCode'] == 200) {

@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
           await this.modalCtrl.dismiss();
           this.router.navigate(["/home"]);
         } else {
-          this.alert.presentToast("error al login", "danger");
+          this.alert.presentToast("Error al iniciar sesión", "danger");
         }
       },
       error =>
