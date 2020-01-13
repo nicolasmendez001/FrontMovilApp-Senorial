@@ -1,4 +1,15 @@
 export class ModelService {
+
+
+  setData(id_user: number, nombre: string, apellido: string, celular: string, correo: string, nombreCategoria: string) {
+    this.id_user = id_user;
+    this.nombre = nombre;
+    this.apellido = apellido;
+    this.celular = celular;
+    this.correo = correo;
+    this.correo = correo;
+    this.nombreCategoria = nombreCategoria;
+}
     public id_user: number;
     public id_service: number;
     public nombre: string;
@@ -17,21 +28,15 @@ export class ModelService {
     public observacion: string;
     public nombreCategoria: string;// categoria general
 
-    constructor(id_user: number, nombre: string, apellido: string, celular: string, correo: string, nombreCategoria: string) {
-        this.id_user = id_user;
+    constructor() {
         this.id_service = 0;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.celular = celular;
         this.direccion = "";
-        this.correo = correo;
         this.estado = "pendiente";
         this.valor = 0;
         this.fecha_servicio = "";
         this.horario = "";
         this.nColaboradores = 0;
         this.fecha = "";
-        this.nombreCategoria = nombreCategoria;
         this.comentario = "";
         this.tipoServicio = "";
         this.observacion = "";

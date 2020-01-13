@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ServiceService } from '../services/service/service.service';
 import { ServiceComponent } from '../service/service.component';
 import { ModalController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-home',
@@ -12,20 +13,9 @@ export class HomePage {
 
   public services: Array<any>;
 
-  constructor(private service: ServiceService, public modalController: ModalController) {
+  constructor(private service: ServiceService, public modalController: ModalController, private storage: Storage) {
     this.services = new Array<any>();
     this.loadServices();
-    //this.testServices();
-  }
-
-  private testServices() {
-    this.services = new Array<any>();
-    this.services.push({ id_category: 1, name: "Lavado de auto", icon: "car", color: "secondary" });
-    this.services.push({ id_category: 2, name: "Aseo general", icon: "contacts", color: "danger" });
-    this.services.push({ id_category: 3, name: "Limpieza de piscina", icon: "help-buoy", color: "medium" });
-    this.services.push({ id_category: 4, name: "Jardineria", icon: "partly-sunny", color: "tertiary" });
-    console.log(this.services);
-
   }
 
   private loadServices() {
@@ -42,7 +32,6 @@ export class HomePage {
       error =>
         console.log(error)
     );
-    //this.service.disconect();
   }
 
   /**
@@ -56,19 +45,6 @@ export class HomePage {
       }
     });
     await modal.present();
-
-    /*
-this.service.getDataService(id).subscribe(
-  res => {
-    console.log(res);
-  },
-  error =>{
-    alert(error);
   }
-);
-
-*/
-  }
-
-
 }
+

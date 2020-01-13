@@ -20,6 +20,7 @@ import { Ionic4DatepickerModule } from
     '@logisticinfotech/ionic4-datepicker';
 import { SocketIoModule, SocketIoConfig} from 'ngx-socket-io';
 import { APP_URL } from './constants';
+import { IonicStorageModule } from '@ionic/storage';
 
 const config : SocketIoConfig = {url: APP_URL, options: {}};
 
@@ -36,7 +37,8 @@ const config : SocketIoConfig = {url: APP_URL, options: {}};
     HttpClientModule,
     TabsPageModule,
     Ionic4DatepickerModule,
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config),
+    IonicStorageModule.forRoot()
   ],
   providers: [
     StatusBar,

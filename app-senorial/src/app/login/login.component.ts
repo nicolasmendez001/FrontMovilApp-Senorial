@@ -1,8 +1,9 @@
 import { AlertService } from './../services/Alert/alert.service';
 import { UserService } from './../services/user/user.service';
 import { Component, OnInit } from '@angular/core';
-import { ModalController} from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-login',
@@ -12,17 +13,16 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   constructor(private modalCtrl: ModalController, private service: UserService, private router: Router,
-    private alert: AlertService) { }
+    private alert: AlertService, private storage: Storage) { }
 
   ngOnInit() { }
 
   login(form) {
-    console.log(form.value);
     this.service.loginUser(form.value).subscribe(
       async res => {
-        console.log(res);
-
         if (res['responseCode'] == 200) {
+          console.log("Objeto de inicio", res['object'][0]);
+          this.storage.set('user', res['object'][0]);
           this.alert.presentToast("Sesión iniciada", "success");
           await this.modalCtrl.dismiss();
           this.router.navigate(["/home"]);
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  
+
 
   async close() {
     await this.modalCtrl.dismiss();

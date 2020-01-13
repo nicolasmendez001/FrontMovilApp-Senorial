@@ -1,3 +1,4 @@
+import { ModelUser } from './../../Models/ModelUser';
 import { AlertService } from './../services/Alert/alert.service';
 import { ServiceService } from 'src/app/services/service/service.service';
 import { UserService } from './../services/user/user.service';
@@ -5,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ModalController, PickerController, AlertController } from '@ionic/angular';
 import { PickerOptions, PickerColumnOption } from '@ionic/core';
 import { ModelService } from 'src/Models/ModelService';
-import { Router } from '@angular/router';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-service',
@@ -16,14 +17,14 @@ export class ServiceComponent implements OnInit {
 
   @Input() dataModal: any;
 
-  public directions: Array<String>;
+  public directions: Array<string>;
   public selectService: string;
   public jornadaData: Array<string>;
   public serviceData: ModelService;
 
   constructor(private modalCtrl: ModalController, private pickerCtrl: PickerController,
     private serviceUser: UserService, private serviceSer: ServiceService, private alertController: AlertController,
-    private alert: AlertService, private router: Router) {
+    private alert: AlertService, private storage: Storage) {
   }
 
   private calcualteMinDate(i: number): string {
@@ -90,14 +91,16 @@ export class ServiceComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.dataModal);
-    this.serviceData = new ModelService(1, "Juan carlos", "Perez", "3112664704", "mnikolas001@hotmail.com", this.dataModal.name);
-    this.serviceData.fecha_servicio = this.calcualteMinDate(0);
-    this.serviceData.fecha = this.calcualteMinDate(0);
     this.jornadaData = new Array<string>();
     this.directions = new Array<string>();
-    this.loadDirections();
-    this.loadJornada(new Date());
+    this.serviceData = new ModelService();
+    this.storage.get('user').then((value) => {
+      this.serviceData.setData(1, value.nombre, value.apellido, value.celular, value.correo, this.dataModal.name);
+      this.serviceData.fecha_servicio = this.calcualteMinDate(0);
+      this.serviceData.fecha = this.calcualteMinDate(0);
+      this.loadDirections();
+      this.loadJornada(new Date());
+    });
   }
 
   private loadJornada(date: Date) {
@@ -109,20 +112,9 @@ export class ServiceComponent implements OnInit {
   }
 
   private loadDirections() {
-    this.directions.push("calle 43 # 10 42");
-    this.directions.push("calle 21 # 10 42");
-    this.directions.push("calle 35 # 10 - 42");
-
-    /*    this.service.loadDirections(myId).subscribe(
-          res => {
-            console.log(res);
-            this.directions = res;
-          },
-          error =>{
-            alert(error);
-          }
-        );
-        */
+    this.storage.get('user').then((value) => {
+      this.directions = value.direccion;
+    });
   }
 
   /**
@@ -131,6 +123,7 @@ export class ServiceComponent implements OnInit {
   public async showPick() {
     let cancel = true;
     let o = [];
+    this.loadDirections();
 
     for (let i = 0; i < this.directions.length; i++) {
       o.push({
@@ -211,10 +204,14 @@ export class ServiceComponent implements OnInit {
   private saveDirection(direction: string) {
     this.serviceUser.saveDirection(direction, 0).subscribe(
       res => {
-        console.log("Eviar direccion",res);
-        
         this.alert.presentToast("La dirección fue guardada", "warning");
         this.serviceData.direccion = direction;
+        let user: ModelUser;
+        this.storage.get('user').then((value) => {
+          user = value;
+          user.direccion.push(direction);
+          this.storage.set('user', user);
+        });
       },
       error => {
         alert("Error al guardar");
@@ -236,7 +233,7 @@ export class ServiceComponent implements OnInit {
     this.serviceSer.saveService(this.serviceData).subscribe(
       res => {
         this.alert.presentSaveService("Servicio enviado",
-        "RECIBIRÁ UNA LLAMADA PARA CONFIRMAR","success", 'bottom');
+          "RECIBIRÁ UNA LLAMADA PARA CONFIRMAR", "success", 'bottom');
         this.modalCtrl.dismiss();
       },
       error => {
