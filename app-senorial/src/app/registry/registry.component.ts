@@ -31,11 +31,6 @@ export class RegistryComponent implements OnInit {
     await modal.present();
   }
 
-  saveRegistry() {
-    //alert("Save data -> " + this.user.nombre);
-    console.log(this.user);
-   }
-
   onSubmit() {
     this.validateDataUser();
   }

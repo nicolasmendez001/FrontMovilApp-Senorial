@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController, MenuController } from '@ionic/angular';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-init-screen',
@@ -7,8 +9,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InitScreenComponent implements OnInit {
 
-  constructor() { }
+  constructor(public modalController: ModalController, private menuCtrl: MenuController) {
+    this.menuCtrl.enable(false);
+   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
+  async loginUser() {
+    const modal = await this.modalController.create({
+      component: LoginComponent,
+      componentProps: {
+        'data': {}
+      }
+    });
+    await modal.present();
+  }
+
+  /**
+   * registryUser
+   */
+  public registryUser() {
+    alert("registrarse");
+  }
 }

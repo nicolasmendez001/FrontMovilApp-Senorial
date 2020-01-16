@@ -1,3 +1,32 @@
-<p>
-  init-screen works!
-</p>
+<ion-content class="body">
+  <img src="/assets/icon/icon2.png" alt="" />
+  <ion-grid style="height: 60%">
+    <ion-row justify-content-center align-items-center style="height: 80%">
+      <ion-card id="login-card">
+        <ion-card-header class="ion-text-center">
+          <h4>Bienvenido al servicio de la app</h4>
+          <ion-label>
+            <h1><strong>SEÑORIAL!</strong></h1>
+          </ion-label>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-button color ="warning" expand="full"  class="btn" (click)="loginUser()">
+            <ion-icon name="paper-plane" slot="start"></ion-icon>
+            Iniciar sesión
+          </ion-button>
+          <ion-button color ="success" expand="full"  class="btn" routerLink ='/registry'>
+            <ion-icon name="key" slot="start"></ion-icon>
+            Registrate
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<ion-footer class="footer">
+  <ion-item class="ion-text-center">
+    <ion-label>
+      <ion-icon name="flame" color="danger"></ion-icon> 2020 - App señorial
+    </ion-label>
+  </ion-item>
+</ion-footer>

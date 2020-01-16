@@ -1,3 +1,4 @@
+import { InitScreenComponent } from './init-screen/init-screen.component';
 import { LoginComponent } from './login/login.component';
 import { RegistryComponent } from './registry/registry.component';
 import { TabsPageModule } from './pages/tabs/tabs.module';
@@ -26,7 +27,7 @@ const config : SocketIoConfig = {url: APP_URL, options: {}};
 
 @NgModule({
   declarations: [
-    AppComponent, ServiceComponent, AboutUsComponent, HelpComponent, RegistryComponent, LoginComponent],
+    AppComponent, ServiceComponent, AboutUsComponent, HelpComponent, RegistryComponent, LoginComponent, InitScreenComponent],
   entryComponents: [ServiceComponent, TabsPage, LoginComponent],
 
 

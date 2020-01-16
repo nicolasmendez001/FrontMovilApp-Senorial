@@ -1,3 +1,4 @@
+import { InitScreenComponent } from './init-screen/init-screen.component';
 import { RegistryComponent } from './registry/registry.component';
 import { HelpComponent } from './help/help.component';
 import { AboutUsComponent } from './about-us/about-us.component';
@@ -7,7 +8,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'init',
     pathMatch: 'full'
   },
   {
@@ -24,6 +25,14 @@ const routes: Routes = [
   },
   {
     path: 'help',
+    component: HelpComponent
+  },
+  {
+    path: 'init',
+    component: InitScreenComponent
+  },
+  {
+    path: 'registry',
     component: RegistryComponent
   }
 ];

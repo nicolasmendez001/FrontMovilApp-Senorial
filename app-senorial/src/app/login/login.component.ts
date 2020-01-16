@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
         }
       },
       error =>
-        console.log(error)
+      this.alert.presentToast("Error al iniciar sesión", "danger")
     );
   }
 
