@@ -63,5 +63,4 @@ export class RegistryComponent implements OnInit {
     );
     //this.service.disconect();
   }
-
 }

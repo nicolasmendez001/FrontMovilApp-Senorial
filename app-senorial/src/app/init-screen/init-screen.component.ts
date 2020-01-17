@@ -9,6 +9,8 @@ import { LoginComponent } from '../login/login.component';
 })
 export class InitScreenComponent implements OnInit {
 
+  ip: string;
+
   constructor(public modalController: ModalController, private menuCtrl: MenuController) {
     this.menuCtrl.enable(false);
    }
@@ -23,12 +25,5 @@ export class InitScreenComponent implements OnInit {
       }
     });
     await modal.present();
-  }
-
-  /**
-   * registryUser
-   */
-  public registryUser() {
-    alert("registrarse");
   }
 }

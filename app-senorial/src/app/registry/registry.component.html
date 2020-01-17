@@ -1,7 +1,9 @@
 <ion-header class="header">
   <ion-toolbar color="success">
-
     <img src="/assets/icon/icon.png" class="icon" alt="" />
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
   <p class="ion-text-center">¿Ya tienes una cuenta?</p>
   <ion-button size="small" color="warning" expand="block" class="btn" (click)="loginUser()">
@@ -31,7 +33,7 @@
           <ion-label position="floating">Edad</ion-label>
           <ion-input [(ngModel)]="user.edad" name="edad" type="number" required></ion-input>
         </ion-item>
-       
+
         <ion-item>
           <ion-label position="floating">Teléfono o celular</ion-label>
           <ion-input [(ngModel)]="user.telefono" name="telefono" type="tel" required></ion-input>
@@ -39,7 +41,7 @@
         <ion-item>
           <ion-label position="floating">Correo</ion-label>
           <ion-input [(ngModel)]="user.correo" name="correo" type="email"
-          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required></ion-input>
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required></ion-input>
         </ion-item>
 
         <ion-item>
@@ -48,7 +50,7 @@
         </ion-item>
         <ion-item>
           <ion-label position="floating">Confirmar contraseña</ion-label>
-          <ion-input [(ngModel)]="pass" name="confirmContrasena" type="password" required ></ion-input>
+          <ion-input [(ngModel)]="pass" name="confirmContrasena" type="password" required></ion-input>
         </ion-item>
       </ion-list>
       <ion-button color="danger" expand="full" type="submit" [disabled]="formulario.invalid">

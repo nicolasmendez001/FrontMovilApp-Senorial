@@ -3,13 +3,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { APP_URL } from 'src/app/constants';
+import { Socket } from 'ngx-socket-io';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private socket: Socket) {
+    this.socket.connect();
+   }
 
   loadDirections(id: number):Observable<any[]>{
     return this.http.get<any[]>(`${APP_URL}/loadDirections/${id}`);

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ServiceService } from '../services/service/service.service';
 import { ServiceComponent } from '../service/service.component';
-import { ModalController } from '@ionic/angular';
+import { ModalController, MenuController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 
 @Component({
@@ -13,9 +13,11 @@ export class HomePage {
 
   public services: Array<any>;
 
-  constructor(private service: ServiceService, public modalController: ModalController, private storage: Storage) {
+  constructor(private service: ServiceService, public modalController: ModalController,
+     private storage: Storage, private menuCtrl: MenuController) {
     this.services = new Array<any>();
     this.loadServices();
+    this.menuCtrl.enable(true);
   }
 
   private loadServices() {
