@@ -12,10 +12,11 @@ export class InitScreenComponent implements OnInit {
   ip: string;
 
   constructor(public modalController: ModalController, private menuCtrl: MenuController) {
-    this.menuCtrl.enable(false);
    }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    this.menuCtrl.enable(false);
+  }
 
   async loginUser() {
     const modal = await this.modalController.create({

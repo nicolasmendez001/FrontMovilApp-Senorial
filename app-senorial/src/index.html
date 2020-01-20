@@ -19,7 +19,13 @@
 </head>
 
 <body>
-  <app-root></app-root>
+  <div *ngIf="isLogin() != null" >
+    <app-root></app-root>
+  </div>
+  
+  <div *ngIf="isLogin() == null" >
+    <app-login></app-login>
+  </div>
 </body>
 
 </html>

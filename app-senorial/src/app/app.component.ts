@@ -1,9 +1,11 @@
+import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 
 import { Platform, MenuController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { timer } from 'rxjs';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-root',
@@ -45,7 +47,9 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
+    private storage: Storage,
+    private router: Router
   ) {
     this.menuCtrl.enable(true);
     this.initializeApp();
@@ -56,6 +60,24 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       timer(3000).subscribe(() => this.showSplash = false)
+    });
+  }
+
+  salir() {
+    this.storage.get('user').then((value) => {
+      console.log("antes -->", value);
+    });
+    this.storage.clear();
+    this.storage.get('user').then((value) => {
+      console.log("despues -->", value);
+    });
+    this.router.navigate(["/init"]);
+
+  }
+
+  isLogin() {
+    this.storage.get('user').then((value) => {
+      return value;
     });
   }
 }
