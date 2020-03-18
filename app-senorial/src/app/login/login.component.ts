@@ -30,15 +30,13 @@ export class LoginComponent implements OnInit {
           this.alert.presentToast("Error al iniciar sesión", "danger");
         }
       },
-      error =>
-      this.alert.presentToast("Error al iniciar sesión", "danger")
+      err =>{
+        this.alert.presentToast("Error al iniciar sesión", "danger");
+      }
     );
   }
-
-
 
   async close() {
     await this.modalCtrl.dismiss();
   }
-
 }

@@ -1,3 +1,4 @@
+import { ProfileComponent } from './profile/profile.component';
 import { InitScreenComponent } from './init-screen/init-screen.component';
 import { RegistryComponent } from './registry/registry.component';
 import { HelpComponent } from './help/help.component';
@@ -34,6 +35,10 @@ const routes: Routes = [
   {
     path: 'registry',
     component: RegistryComponent
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent
   }
 ];
 

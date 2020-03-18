@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, MenuController } from '@ionic/angular';
 import { LoginComponent } from '../login/login.component';
+import { Storage } from '@ionic/storage';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-init-screen',
@@ -11,11 +13,21 @@ export class InitScreenComponent implements OnInit {
 
   ip: string;
 
-  constructor(public modalController: ModalController, private menuCtrl: MenuController) {
-   }
+  constructor(public modalController: ModalController, private menuCtrl: MenuController,
+    private storage: Storage, private router: Router) {
+  }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.menuCtrl.enable(false);
+    this.storage.get('user').then((value) => {
+      if (value != null) {
+        this.router.navigate(["/home"]);
+      }
+    },
+      error => {
+        //this.router.navigate(["/home"]);
+      }
+    );
   }
 
   async loginUser() {

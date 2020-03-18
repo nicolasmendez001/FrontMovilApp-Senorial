@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ModelService } from 'src/Models/ModelService';
 import { ServiceService } from 'src/app/services/service/service.service';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-tab-pendientes',
@@ -11,20 +11,27 @@ export class TabPendientesPage implements OnInit {
 
   public services: Array<any>;
 
-  constructor(private service: ServiceService) { }
+  constructor(private service: ServiceService, private storage: Storage) { }
 
   ngOnInit() {
     this.services = new Array<any>();
-    this.loadPendientes();
+    this.loadServices();
   }
 
-  private loadPendientes() {
-    this.service.getServices(1, "pendiente").subscribe(
+  private loadServices() {
+    this.storage.get('user').then((value) => {
+      this.getServices(value.id_user);
+    });
+    
+  }
+
+  private getServices(id_user: number) {
+    this.service.getServices(id_user, "pendiente").subscribe(
       res => {
         console.log(res);
         if (res['responseCode'] == 200) {
           this.services = res['object'];
-        } 
+        }
       },
       error =>
         console.log(error)

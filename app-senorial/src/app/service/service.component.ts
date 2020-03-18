@@ -25,10 +25,22 @@ export class ServiceComponent implements OnInit {
   constructor(private modalCtrl: ModalController, private pickerCtrl: PickerController,
     private serviceUser: UserService, private serviceSer: ServiceService, private alertController: AlertController,
     private alert: AlertService, private storage: Storage) {
-  }
+    }
 
-  private calcualteMinDate(i: number): string {
-    let date = new Date();
+    ngOnInit() {
+      this.jornadaData = new Array<string>();
+      this.directions = new Array<string>();
+      this.serviceData = new ModelService();
+      this.storage.get('user').then((value) => {
+        this.serviceData.setData(value.id_user, value.nombre, value.apellido, value.celular, value.correo, this.dataModal.name);
+        this.serviceData.fecha_servicio = this.calcualteMinDate(0);
+        this.serviceData.fecha = this.calcualteMinDate(0);
+        this.loadDirections();
+        this.loadJornada(new Date());
+      });
+    }
+    private calcualteMinDate(i: number): string {
+      let date = new Date();
     let fecha = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate() + i}`
     return fecha;
   }
@@ -90,18 +102,6 @@ export class ServiceComponent implements OnInit {
     await this.modalCtrl.dismiss();
   }
 
-  ngOnInit() {
-    this.jornadaData = new Array<string>();
-    this.directions = new Array<string>();
-    this.serviceData = new ModelService();
-    this.storage.get('user').then((value) => {
-      this.serviceData.setData(1, value.nombre, value.apellido, value.celular, value.correo, this.dataModal.name);
-      this.serviceData.fecha_servicio = this.calcualteMinDate(0);
-      this.serviceData.fecha = this.calcualteMinDate(0);
-      this.loadDirections();
-      this.loadJornada(new Date());
-    });
-  }
 
   private loadJornada(date: Date) {
     if (date.getHours() < 12) {

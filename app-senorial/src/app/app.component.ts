@@ -15,6 +15,7 @@ import { Storage } from '@ionic/storage';
 export class AppComponent {
 
   showSplash = true;
+  userName: string = "";
 
   public appPages = [
     {
@@ -53,6 +54,9 @@ export class AppComponent {
   ) {
     this.menuCtrl.enable(true);
     this.initializeApp();
+    this.storage.get('user').then((value) => {
+      this.userName = value.nombre +" "+ value.apellido;
+    });
   }
 
   initializeApp() {
@@ -63,16 +67,14 @@ export class AppComponent {
     });
   }
 
-  salir() {
-    this.storage.get('user').then((value) => {
-      console.log("antes -->", value);
-    });
-    this.storage.clear();
-    this.storage.get('user').then((value) => {
-      console.log("despues -->", value);
-    });
-    this.router.navigate(["/init"]);
+  profile(){
+    alert("entra a perfil");
+  }
 
+  salir() {
+    this.storage.clear();
+    this.menuCtrl.enable(false);
+    this.router.navigate(["/init"]);
   }
 
   isLogin() {

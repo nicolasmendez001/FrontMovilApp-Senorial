@@ -1,3 +1,4 @@
+import { ProfileComponent } from './profile/profile.component';
 import { InitScreenComponent } from './init-screen/init-screen.component';
 import { LoginComponent } from './login/login.component';
 import { RegistryComponent } from './registry/registry.component';
@@ -22,12 +23,13 @@ import { Ionic4DatepickerModule } from
 import { SocketIoModule, SocketIoConfig} from 'ngx-socket-io';
 import { APP_URL } from './constants';
 import { IonicStorageModule } from '@ionic/storage';
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
 
 const config : SocketIoConfig = {url: APP_URL, options: {}};
 
 @NgModule({
   declarations: [
-    AppComponent, ServiceComponent, AboutUsComponent, HelpComponent, RegistryComponent, LoginComponent, InitScreenComponent],
+    AppComponent, ServiceComponent, AboutUsComponent, HelpComponent, RegistryComponent, LoginComponent, InitScreenComponent, ProfileComponent],
   entryComponents: [ServiceComponent, TabsPage, LoginComponent],
 
 
@@ -44,6 +46,7 @@ const config : SocketIoConfig = {url: APP_URL, options: {}};
   providers: [
     StatusBar,
     SplashScreen,
+    EmailComposer,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ServiceService } from '../services/service/service.service';
 import { ServiceComponent } from '../service/service.component';
 import { ModalController, MenuController } from '@ionic/angular';
@@ -9,15 +9,18 @@ import { Storage } from '@ionic/storage';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
 
   public services: Array<any>;
 
   constructor(private service: ServiceService, public modalController: ModalController,
-     private storage: Storage, private menuCtrl: MenuController) {
+    private storage: Storage, private menuCtrl: MenuController) {
     this.services = new Array<any>();
-    this.loadServices();
+  }
+
+  ngOnInit() {
     this.menuCtrl.enable(true);
+    this.loadServices();
   }
 
   private loadServices() {
@@ -29,6 +32,7 @@ export class HomePage {
 
         } else {
           alert("Ocurrio un error");
+          console.log(res);
         }
       },
       error =>

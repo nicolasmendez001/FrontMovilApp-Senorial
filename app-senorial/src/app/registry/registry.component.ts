@@ -4,6 +4,7 @@ import { ModelUser } from './../../Models/ModelUser';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
+import { AlertService } from '../services/Alert/alert.service';
 
 @Component({
   selector: 'app-registry',
@@ -15,7 +16,8 @@ export class RegistryComponent implements OnInit {
   user: ModelUser;
   pass: String = "";
 
-  constructor(private service: UserService, private router: Router, public modalController: ModalController) {
+  constructor(private service: UserService, private router: Router, public modalController: ModalController,
+    private alert: AlertService) {
     this.user = new ModelUser();
   }
 
@@ -36,10 +38,8 @@ export class RegistryComponent implements OnInit {
   }
 
   private validateDataUser() {
-    console.log(this.user.contrasena + " - "+ this.pass);
-    
     if (this.user.contrasena != this.pass) {
-      alert("Contrase equivocada");
+      this.alert.presentToast("Las contraseñas no coinciden", "danger");
    // }else if () {
     }
     else{
@@ -52,6 +52,8 @@ export class RegistryComponent implements OnInit {
     this.service.saveUser(this.user).subscribe(
       res => {
         if (res['status'] == 200) {
+          console.log(res);
+          
           alert("Usuario guardado");
           this.router.navigate(["/home"]);
         } else {

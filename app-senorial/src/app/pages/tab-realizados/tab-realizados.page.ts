@@ -2,6 +2,7 @@ import { AlertService } from './../../services/Alert/alert.service';
 import { ModelService } from 'src/Models/ModelService';
 import { Component, OnInit } from '@angular/core';
 import { ServiceService } from 'src/app/services/service/service.service';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-tab-realizados',
@@ -13,27 +14,31 @@ export class TabRealizadosPage implements OnInit {
   public services: Array<any>;
   public comment: String = "";
 
-  constructor(private service: ServiceService, private alert: AlertService) { }
+  constructor(private service: ServiceService, private alert: AlertService, private storage: Storage) { }
 
   ngOnInit() {
     this.services = new Array<any>();
-    this.loadRealizados();
+    this.loadServices();
   }
 
-  private loadRealizados() {
-    this.service.getServices(1, "realizado").subscribe(
+  private loadServices() {
+    this.storage.get('user').then((value) => {
+      this.getServices(value.id_user);
+    });
+    
+  }
+
+  private getServices(id_user: number) {
+    this.service.getServices(id_user, "realizado").subscribe(
       res => {
         console.log(res);
         if (res['responseCode'] == 200) {
           this.services = res['object'];
-        } else {
-          alert("Ocurrio un error");
         }
       },
       error =>
         console.log(error)
     );
-    //this.service.disconect();
   }
 
   btnAddComment(item) {
@@ -46,7 +51,6 @@ export class TabRealizadosPage implements OnInit {
   }
 
   saveComment(item) {
-    console.log("Item", item);
     item.comentario = this.comment;
     this.service.saveComment(item.id_service, this.comment).subscribe(
       async res => {

@@ -1,4 +1,4 @@
-<div *ngIf="showSplash" class="splash" >
+<div *ngIf="showSplash" class="splash">
   <div class="spinner"></div>
 </div>
 
@@ -6,27 +6,34 @@
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
       <ion-header>
-        <ion-toolbar color="success">
-          <ion-title>Menu de opciones</ion-title>
-        </ion-toolbar>
+        <ion-menu-toggle auto-hide="true">
+          <ion-item routerLink="/profile" color="success">
+            <ion-avatar slot="start">
+              <img src="/assets/profile.png">
+            </ion-avatar>
+            <ion-label>{{userName}}</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
       </ion-header>
       <ion-content>
         <ion-list *ngFor="let pages of appPages">
           <ion-menu-toggle auto-hide="true">
             <ion-item [routerLink]="pages.url" routerDirection="forward">
-                <ion-icon [style.color] ="pages.color" [name]="pages.icon" slot="start"></ion-icon>
-                   {{pages.title}} 
+              <ion-icon [style.color]="pages.color" [name]="pages.icon" slot="start"></ion-icon>
+              {{pages.title}}
             </ion-item>
           </ion-menu-toggle>
-          </ion-list>
+        </ion-list>
       </ion-content>
       <ion-footer>
-        <ion-item (click) = "salir()">
-          <ion-icon [style.color]="'red'" slot="start" name="trash"></ion-icon>
-          <ion-label>
-            Cerrar sesión!
-          </ion-label>
-        </ion-item>
+        <ion-menu-toggle auto-hide="true">
+          <ion-item (click)="salir()">
+            <ion-icon [style.color]="'red'" slot="start" name="trash"></ion-icon>
+            <ion-label>
+              Cerrar sesión!
+            </ion-label>
+          </ion-item>
+        </ion-menu-toggle>
       </ion-footer>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>
