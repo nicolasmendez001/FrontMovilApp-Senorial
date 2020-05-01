@@ -1,7 +1,7 @@
-import { ModelUser } from './../../Models/ModelUser';
-import { AlertService } from './../services/Alert/alert.service';
+import { ModelUser } from '../../../Models/ModelUser';
+import { AlertService } from '../../services/Alert/alert.service';
 import { ServiceService } from 'src/app/services/service/service.service';
-import { UserService } from './../services/user/user.service';
+import { UserService } from '../../services/user/user.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalController, PickerController, AlertController } from '@ionic/angular';
 import { PickerOptions, PickerColumnOption } from '@ionic/core';
@@ -21,26 +21,40 @@ export class ServiceComponent implements OnInit {
   public selectService: string;
   public jornadaData: Array<string>;
   public serviceData: ModelService;
+  public services: any;
 
   constructor(private modalCtrl: ModalController, private pickerCtrl: PickerController,
     private serviceUser: UserService, private serviceSer: ServiceService, private alertController: AlertController,
     private alert: AlertService, private storage: Storage) {
-    }
+  }
 
-    ngOnInit() {
-      this.jornadaData = new Array<string>();
-      this.directions = new Array<string>();
-      this.serviceData = new ModelService();
-      this.storage.get('user').then((value) => {
-        this.serviceData.setData(value.id_user, value.nombre, value.apellido, value.celular, value.correo, this.dataModal.name);
-        this.serviceData.fecha_servicio = this.calcualteMinDate(0);
-        this.serviceData.fecha = this.calcualteMinDate(0);
-        this.loadDirections();
-        this.loadJornada(new Date());
-      });
-    }
-    private calcualteMinDate(i: number): string {
-      let date = new Date();
+  ngOnInit() {
+    this.jornadaData = new Array<string>();
+    this.directions = new Array<string>();
+    this.serviceData = new ModelService();
+    this.loadServices(this.dataModal.id);
+    this.storage.get('user').then((value) => {
+      this.serviceData.setData(value.id_user, value.nombre, value.apellido, value.celular, value.correo, this.dataModal.name);
+      this.serviceData.fecha_servicio = this.calcualteMinDate(0);
+      this.serviceData.fecha = this.calcualteMinDate(0);
+      this.loadDirections();
+      this.loadJornada(new Date());
+    }).catch(() => {
+      // login de nuevo
+    });
+  }
+
+  private loadServices(id_category: number) {
+    this.serviceSer.getServicesOfType(id_category).subscribe(res => {
+      this.services = res['object'][0].servicios;
+    },
+      () => {
+        console.log("Error al cargar");
+      })
+  }
+
+  private calcualteMinDate(i: number): string {
+    let date = new Date();
     let fecha = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate() + i}`
     return fecha;
   }
@@ -231,12 +245,12 @@ export class ServiceComponent implements OnInit {
    */
   public next() {
     this.serviceSer.saveService(this.serviceData).subscribe(
-      res => {
+      () => {
         this.alert.presentSaveService("Servicio enviado",
           "RECIBIRÁ UNA LLAMADA PARA CONFIRMAR", "success", 'bottom');
         this.modalCtrl.dismiss();
       },
-      error => {
+      () => {
         alert("Error a guardar");
       }
     );

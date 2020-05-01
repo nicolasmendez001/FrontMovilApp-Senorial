@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      ¿Olvidaste la contraseña?
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <form class="ion-padding-top" (submit)="sendResPass()">
+    <div class="ion-text-centar">
+      <small>Ingresa tu correo electronico para enviarte las instrucciones para recuperar la contraseña</small>
+    </div>
+    <ion-item>
+      <ion-input [(ngModel)]="email" name="correo" type="email"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required></ion-input>
+    </ion-item>
+    <ion-button class="ion-margin-top" type="sumit" expand="block">Enviar correo</ion-button>
+  </form>
+</ion-content>

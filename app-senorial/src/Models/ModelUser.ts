@@ -8,6 +8,7 @@ export class ModelUser {
     public correo: string;
     public contrasena: string;
     public edad: number;
+    public uID: string;
 
     constructor() {
         this.id_user = 0;
@@ -17,5 +18,6 @@ export class ModelUser {
         this.direccion = new Array<string>();
         this.correo = "";
         this.contrasena = "";
+        this.uID = "";
     }
 }

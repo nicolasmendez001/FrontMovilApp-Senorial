@@ -1,3 +1,4 @@
+import { AuthService } from './services/auth/auth.service';
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 
@@ -50,13 +51,16 @@ export class AppComponent {
     private statusBar: StatusBar,
     private menuCtrl: MenuController,
     private storage: Storage,
-    private router: Router
+    private router: Router,
+    private auth: AuthService
   ) {
     this.menuCtrl.enable(true);
     this.initializeApp();
+    /*
     this.storage.get('user').then((value) => {
       this.userName = value.nombre +" "+ value.apellido;
     });
+    */
   }
 
   initializeApp() {
@@ -67,14 +71,17 @@ export class AppComponent {
     });
   }
 
-  profile(){
+  profile() {
     alert("entra a perfil");
   }
 
   salir() {
+    /*
     this.storage.clear();
     this.menuCtrl.enable(false);
     this.router.navigate(["/init"]);
+    */
+    this.auth.logout();
   }
 
   isLogin() {

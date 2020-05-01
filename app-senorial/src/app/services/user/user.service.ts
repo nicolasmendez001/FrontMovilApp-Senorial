@@ -23,10 +23,12 @@ export class UserService {
   }
 
   saveUser(user: ModelUser) {
+    console.log(user);
+    
     return this.http.post(`${APP_URL}/user`, user);
   }
 
-  loginUser(user: JSON){
-    return this.http.post(`${APP_URL}/loginUser`, user);
+  loginUser(uid: string){
+    return this.http.get(`${APP_URL}/loginUser/${uid}`);
   }
 }

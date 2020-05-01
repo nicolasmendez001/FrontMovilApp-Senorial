@@ -1,10 +1,12 @@
-import { ProfileComponent } from './profile/profile.component';
-import { InitScreenComponent } from './init-screen/init-screen.component';
-import { RegistryComponent } from './registry/registry.component';
-import { HelpComponent } from './help/help.component';
-import { AboutUsComponent } from './about-us/about-us.component';
+import { ResetPassComponent } from './components/reset-pass/reset-pass.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { InitScreenComponent } from './components/init-screen/init-screen.component';
+import { RegistryComponent } from './components/registry/registry.component';
+import { HelpComponent } from './components/help/help.component';
+import { AboutUsComponent } from './components/about-us/about-us.component';
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
   {
@@ -14,7 +16,7 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
+    loadChildren: () => import('./components/home/home.module').then(m => m.HomePageModule),
   },
   {
     path: 'myServices',
@@ -39,6 +41,14 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent
+  },
+  {
+    path: 'resetPass',
+    component: ResetPassComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   }
 ];
 
@@ -48,4 +58,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

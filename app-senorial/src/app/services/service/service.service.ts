@@ -18,6 +18,10 @@ export class ServiceService {
     return this.http.get<any[]>(`${APP_URL}/tipoServicio`);
   }
 
+  getServicesOfType(id_service: number): Observable<any> {
+    return this.http.get<any>(`${APP_URL}/servicesType/${id_service}`);
+  }
+
   public getDataService(id: number): Observable<ModelService> {
     return this.http.get<ModelService>(`${APP_URL}/getService/${id}`);
   }
@@ -27,7 +31,7 @@ export class ServiceService {
   }
 
   saveComment(id_service: number, comment: String) {
-   return this.http.put(`${APP_URL}/saveComment`, { id: id_service, comentario: comment });
+    return this.http.put(`${APP_URL}/saveComment`, { id: id_service, comentario: comment });
   }
 
   /**

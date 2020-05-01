@@ -6,7 +6,7 @@
     </ion-buttons>
   </ion-toolbar>
   <p class="ion-text-center">¿Ya tienes una cuenta?</p>
-  <ion-button size="small" color="warning" expand="block" class="btn" (click)="loginUser()">
+  <ion-button size="small" color="warning" expand="block" class="btn" routerLink='/login'>
     <ion-icon name="key" slot="start"></ion-icon>
     Iniciar sesión
   </ion-button>
@@ -46,7 +46,7 @@
 
         <ion-item>
           <ion-label position="floating">Contraseña</ion-label>
-          <ion-input [(ngModel)]="user.contrasena" name="contrasena" type="password" required></ion-input>
+          <ion-input [(ngModel)]="user.contrasena" name="contrasena" type="password" minlength="6" required></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="floating">Confirmar contraseña</ion-label>

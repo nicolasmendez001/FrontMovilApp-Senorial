@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ServiceService } from '../services/service/service.service';
+import { ServiceService } from '../../services/service/service.service';
 import { ServiceComponent } from '../service/service.component';
 import { ModalController, MenuController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
@@ -29,7 +29,6 @@ export class HomePage implements OnInit {
         if (res['responseCode'] == 200) {
           this.services = res['object'];
           console.log(this.services);
-
         } else {
           alert("Ocurrio un error");
           console.log(res);
@@ -47,7 +46,7 @@ export class HomePage implements OnInit {
     const modal = await this.modalController.create({
       component: ServiceComponent,
       componentProps: {
-        'dataModal': { id, name, services }
+        'dataModal': { id, name }
       }
     });
     await modal.present();

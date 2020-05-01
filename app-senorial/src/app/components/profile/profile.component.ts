@@ -1,4 +1,4 @@
-import { ModelUser } from './../../Models/ModelUser';
+import { ModelUser } from '../../../Models/ModelUser';
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 
