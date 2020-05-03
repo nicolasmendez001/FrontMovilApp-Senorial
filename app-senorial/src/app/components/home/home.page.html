@@ -29,7 +29,7 @@
       <ion-spinner name="bubbles" *ngIf="services.length == 0"></ion-spinner>
       <ion-list *ngFor="let item of services">
         <ion-button [color]="item.color" expand="full" class="btn"
-          (click)="isSelectService(item.servicios, item.id_category, item.name)">
+          (click)="isSelectService(item.id_category, item.name)">
           <ion-icon [name]="item.icon" slot="start"></ion-icon>
           {{item.name}}
         </ion-button>

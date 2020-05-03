@@ -56,11 +56,9 @@ export class AppComponent {
   ) {
     this.menuCtrl.enable(true);
     this.initializeApp();
-    /*
     this.storage.get('user').then((value) => {
-      this.userName = value.nombre +" "+ value.apellido;
+      this.userName = value.nombre + " " + value.apellido;
     });
-    */
   }
 
   initializeApp() {
@@ -71,16 +69,10 @@ export class AppComponent {
     });
   }
 
-  profile() {
-    alert("entra a perfil");
-  }
-
   salir() {
-    /*
     this.storage.clear();
     this.menuCtrl.enable(false);
     this.router.navigate(["/init"]);
-    */
     this.auth.logout();
   }
 

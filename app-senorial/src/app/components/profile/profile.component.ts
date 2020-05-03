@@ -24,7 +24,7 @@ export class ProfileComponent implements OnInit {
   }
 
   saveData() {
-
+    alert("guardar");
   }
 
   showMyDir() {

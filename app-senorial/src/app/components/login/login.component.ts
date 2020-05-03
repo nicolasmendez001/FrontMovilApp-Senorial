@@ -4,41 +4,18 @@ import { AlertService } from '../../services/Alert/alert.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent  {
 
   constructor(private service: AuthService, private router: Router,
-    private alert: AlertService, private storage: Storage, private serviceUser: UserService) { }
-
-  ngOnInit() { }
-
-  /*
-  login(form) {
-    this.service.loginUser(form.value).subscribe(
-      async res => {
-        if (res['responseCode'] == 200) {
-          console.log("Objeto de inicio", res['object'][0]);
-          this.storage.set('user', res['object'][0]);
-          this.alert.presentToast("Sesión iniciada", "success");
-          await this.modalCtrl.dismiss();
-          this.router.navigate(["/home"]);
-        } else {
-          this.alert.presentToast("Error al iniciar sesión", "danger");
-        }
-      },
-      err =>{
-        this.alert.presentToast("Error al iniciar sesión", "danger");
-      }
-    );
-  }
-
-  */
-
+    private alert: AlertService, private storage: Storage, private serviceUser: UserService,
+    private menuCtrl: MenuController) { }
 
   login(form: any) {
     this.service.login(form.value.email, form.value.password).then(async res => {
@@ -60,8 +37,9 @@ export class LoginComponent implements OnInit {
       if (res['responseCode'] == 200) {
         this.storage.set('user', res['object'][0]);
         this.alert.presentToast("Sesión iniciada", "success");
+        this.menuCtrl.enable(true);
         this.router.navigate(["/home"]);
-      }else{
+      } else {
         this.alert.presentToast("Error al iniciar sesión", "danger");
       }
     },
@@ -69,5 +47,4 @@ export class LoginComponent implements OnInit {
         this.alert.presentToast("Error al iniciar sesión", "danger");
       })
   }
-
 }

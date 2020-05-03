@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class InitScreenComponent implements OnInit {
 
-  ip: string;
+  //ip: string;
 
   constructor(public modalController: ModalController, private menuCtrl: MenuController,
     private storage: Storage, private router: Router) {
@@ -18,15 +18,11 @@ export class InitScreenComponent implements OnInit {
 
   ngOnInit() {
     this.menuCtrl.enable(false);
-    /*
     this.storage.get('user').then((value) => {
       if (value != null) {
         this.router.navigate(["/home"]);
+        this.menuCtrl.enable(true);
       }
-    },
-      error => {
-        //this.router.navigate(["/home"]);
-      }
-    );*/
+    });
   }
 }

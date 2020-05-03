@@ -22,6 +22,7 @@ export class ServiceComponent implements OnInit {
   public jornadaData: Array<string>;
   public serviceData: ModelService;
   public services: any;
+  private userData: ModelUser;
 
   constructor(private modalCtrl: ModalController, private pickerCtrl: PickerController,
     private serviceUser: UserService, private serviceSer: ServiceService, private alertController: AlertController,
@@ -34,11 +35,14 @@ export class ServiceComponent implements OnInit {
     this.serviceData = new ModelService();
     this.loadServices(this.dataModal.id);
     this.storage.get('user').then((value) => {
-      this.serviceData.setData(value.id_user, value.nombre, value.apellido, value.celular, value.correo, this.dataModal.name);
-      this.serviceData.fecha_servicio = this.calcualteMinDate(0);
-      this.serviceData.fecha = this.calcualteMinDate(0);
-      this.loadDirections();
-      this.loadJornada(new Date());
+      if (value != null) {
+        this.userData = value;
+        this.serviceData.setData(this.userData.id_user, this.userData.nombre, this.userData.apellido, this.userData.telefono, this.userData.correo, this.dataModal.name);
+        this.serviceData.fecha_servicio = this.calcualteMinDate(0);
+        this.serviceData.fecha = this.calcualteMinDate(0);
+        this.loadDirections();
+        this.loadJornada(new Date());
+      }
     }).catch(() => {
       // login de nuevo
     });
@@ -116,7 +120,6 @@ export class ServiceComponent implements OnInit {
     await this.modalCtrl.dismiss();
   }
 
-
   private loadJornada(date: Date) {
     if (date.getHours() < 12) {
       this.jornadaData = ["Mañana", "Tarde"];
@@ -126,19 +129,13 @@ export class ServiceComponent implements OnInit {
   }
 
   private loadDirections() {
-    this.storage.get('user').then((value) => {
-      this.directions = value.direccion;
-    });
+    this.directions = this.userData.direccion;
   }
 
-  /**
-   * showPick
-   */
   public async showPick() {
     let cancel = true;
     let o = [];
     this.loadDirections();
-
     for (let i = 0; i < this.directions.length; i++) {
       o.push({
         text: this.directions[i]
@@ -216,33 +213,23 @@ export class ServiceComponent implements OnInit {
   }
 
   private saveDirection(direction: string) {
-    this.serviceUser.saveDirection(direction, 0).subscribe(
-      res => {
+    this.serviceUser.saveDirection(direction, this.userData.id_user).subscribe(
+      () => {
         this.alert.presentToast("La dirección fue guardada", "warning");
         this.serviceData.direccion = direction;
-        let user: ModelUser;
-        this.storage.get('user').then((value) => {
-          user = value;
-          user.direccion.push(direction);
-          this.storage.set('user', user);
-        });
+        this.userData.direccion.push(direction);
+        this.storage.set('user', this.userData);
       },
-      error => {
-        alert("Error al guardar");
+      () => {
+        this.alert.presentToast("Error al guardar la dirección. Intente mas tarde.", "danger");
       }
     );
   }
 
-  /**
-   * isValid
-   */
   public isValid(): boolean {
     return (this.serviceData.direccion == "" || this.serviceData.tipoServicio == "" || this.serviceData.horario == "");
   }
 
-  /**
-   * next
-   */
   public next() {
     this.serviceSer.saveService(this.serviceData).subscribe(
       () => {
@@ -251,14 +238,11 @@ export class ServiceComponent implements OnInit {
         this.modalCtrl.dismiss();
       },
       () => {
-        alert("Error a guardar");
+        this.alert.presentToast("Error en la petición del servicio, intentelo más tarde", "danger");
       }
     );
   }
 
-  /**
-   * changeDate
-   */
   public changeDate() {
     let date = new Date(this.serviceData.fecha_servicio);
     let hoy = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate() + 1}`;
