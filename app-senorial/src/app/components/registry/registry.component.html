@@ -46,11 +46,11 @@
 
         <ion-item>
           <ion-label position="floating">Contraseña</ion-label>
-          <ion-input [(ngModel)]="user.contrasena" name="contrasena" type="password" minlength="6" required></ion-input>
+          <ion-input [(ngModel)]="pass" name="contrasena" type="password" minlength="6" required></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="floating">Confirmar contraseña</ion-label>
-          <ion-input [(ngModel)]="pass" name="confirmContrasena" type="password" required></ion-input>
+          <ion-input [(ngModel)]="confirmPass" name="confirmContrasena" type="password" required></ion-input>
         </ion-item>
       </ion-list>
       <ion-button color="danger" expand="full" type="submit" [disabled]="formulario.invalid">

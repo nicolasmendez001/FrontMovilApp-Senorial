@@ -101,6 +101,20 @@
     </ion-card-content>
   </ion-card>
 
+  <ion-card lines="none" *ngIf="selectColabor">
+    <ion-card-header>
+      <ion-label>6. Numero de colaboradores: </ion-label>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-select  placeholder="1 colaborador" value=1 [(ngModel)]="serviceData.nColaboradores" okText="Selecionar" cancelText="Cancelar">
+        <ion-select-option value=1>1 colaborador</ion-select-option>
+        <ion-select-option value=2>2 colaboradores</ion-select-option>
+        <ion-select-option value=3>3 colaboradores</ion-select-option>
+        <ion-select-option value=4>4 colaboradores</ion-select-option>
+      </ion-select>
+    </ion-card-content>
+  </ion-card>
+
   <ion-button [disabled]="isValid()" color="success" expand="full" (click)="next()">
     Continuar
     <ion-icon name="arrow-dropright-circle" slot="end">

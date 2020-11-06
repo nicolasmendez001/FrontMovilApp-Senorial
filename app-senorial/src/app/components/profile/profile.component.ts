@@ -1,3 +1,5 @@
+import { AlertService } from './../../services/Alert/alert.service';
+import { UserService } from './../../services/user/user.service';
 import { ModelUser } from '../../../Models/ModelUser';
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
@@ -12,7 +14,7 @@ export class ProfileComponent implements OnInit {
   user: ModelUser;
   showDir: boolean;
 
-  constructor(private storage: Storage) {
+  constructor(private storage: Storage, private service: UserService, private alert: AlertService) {
     this.user = new ModelUser();
   }
 
@@ -24,7 +26,18 @@ export class ProfileComponent implements OnInit {
   }
 
   saveData() {
-    alert("guardar");
+    this.service.updateUser(this.user).subscribe(
+      res =>{
+        if (res['status'] == 200) {
+          this.alert.presentToast("Tus datos han sido guardados ", "success");
+          this.storage.set('user', this.user);
+        } else {
+          this.alert.presentToast("error al guardad tus datos", "danger");
+        }
+      },
+      error =>
+        console.log(error)
+    );
   }
 
   showMyDir() {

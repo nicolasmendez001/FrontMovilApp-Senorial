@@ -6,7 +6,6 @@ export class ModelUser {
     public telefono: string;
     public direccion: Array<string>;
     public correo: string;
-    public contrasena: string;
     public edad: number;
     public uID: string;
 
@@ -17,7 +16,6 @@ export class ModelUser {
         this.telefono = "";
         this.direccion = new Array<string>();
         this.correo = "";
-        this.contrasena = "";
         this.uID = "";
     }
 }

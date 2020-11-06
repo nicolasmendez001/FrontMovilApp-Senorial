@@ -29,4 +29,8 @@ export class UserService {
   loginUser(uid: string){
     return this.http.get(`${APP_URL}/loginUser/${uid}`);
   }
+
+  updateUser(user: ModelUser){
+    return this.http.put<any>(`${APP_URL}/user`, user);
+  }
 }

@@ -15,7 +15,8 @@ import { AlertService } from '../../services/Alert/alert.service';
 export class RegistryComponent implements OnInit {
 
   user: ModelUser;
-  pass: String = "";
+  pass: string = "";
+  confirmPass: string = "";
 
   constructor(private service: UserService, private router: Router, public modalController: ModalController,
     private alert: AlertService, private authService: AuthService) {
@@ -29,7 +30,7 @@ export class RegistryComponent implements OnInit {
   }
 
   private validateDataUser() {
-    if (this.user.contrasena != this.pass) {
+    if (this.confirmPass != this.pass) {
       this.alert.presentToast("Las contraseñas no coinciden", "danger");
     }
     else {
@@ -38,7 +39,7 @@ export class RegistryComponent implements OnInit {
   }
 
   private saveUser() {
-    this.authService.register(this.user.correo, this.user.contrasena).then(auth => {
+    this.authService.register(this.user.correo, this.pass).then(auth => {
       let aux: any = auth;
       this.saveBack(aux.user.uid);
     }).catch(err => {
@@ -50,7 +51,6 @@ export class RegistryComponent implements OnInit {
 
   saveBack(aux: string) {
     this.user.uID = aux;
-    this.user.contrasena ="";
     this.service.saveUser(this.user).subscribe(
       res => {
         if (res['status'] == 200) {

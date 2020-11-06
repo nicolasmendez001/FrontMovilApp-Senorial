@@ -1,5 +1,4 @@
 import { AlertService } from './../../services/Alert/alert.service';
-import { ModelService } from 'src/Models/ModelService';
 import { Component, OnInit } from '@angular/core';
 import { ServiceService } from 'src/app/services/service/service.service';
 import { Storage } from '@ionic/storage';
@@ -29,9 +28,8 @@ export class TabRealizadosPage implements OnInit {
   }
 
   private getServices(id_user: number) {
-    this.service.getServices(id_user, "realizado").subscribe(
+    this.service.getServices(id_user, "terminado").subscribe(
       res => {
-        console.log(res);
         if (res['responseCode'] == 200) {
           this.services = res['object'];
         }
@@ -47,14 +45,12 @@ export class TabRealizadosPage implements OnInit {
     } else {
       item.addComment = true;
     }
-
   }
 
   saveComment(item) {
     item.comentario = this.comment;
     this.service.saveComment(item.id_service, this.comment).subscribe(
       async res => {
-        console.log(res);
         if (res['status'] == 200) {
           this.alert.presentToast("El comentario fué guardado ", "warning");
         } else {

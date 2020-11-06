@@ -23,7 +23,7 @@ export class ModelService {
     public horario: string;
     public nColaboradores: number;
     public fecha: string;
-    public tipoServicio: string; // opciones de cada servicio
+    public tipoServicio: any; // opciones de cada servicio
     public comentario: string;
     public observacion: string;
     public nombreCategoria: string;// categoria general
@@ -35,10 +35,10 @@ export class ModelService {
         this.valor = 0;
         this.fecha_servicio = "";
         this.horario = "";
-        this.nColaboradores = 0;
+        this.nColaboradores = 1;
         this.fecha = "";
         this.comentario = "";
-        this.tipoServicio = "";
+        this.tipoServicio = null;
         this.observacion = "";
     }
 

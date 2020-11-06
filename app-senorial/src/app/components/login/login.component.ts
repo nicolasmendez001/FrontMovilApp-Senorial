@@ -11,7 +11,7 @@ import { MenuController } from '@ionic/angular';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent  {
+export class LoginComponent {
 
   constructor(private service: AuthService, private router: Router,
     private alert: AlertService, private storage: Storage, private serviceUser: UserService,
@@ -21,7 +21,10 @@ export class LoginComponent  {
     this.service.login(form.value.email, form.value.password).then(async res => {
       var user: any = res;
       this.isVerified(user.user.emailVerified, user.user.uid);
-    }).catch(() => { this.alert.presentToast("Error al iniciar sesión", "danger") });
+    }).catch(
+      () => {
+        this.alert.presentToast("Error al iniciar sesión", "danger")
+      });
   }
 
   isVerified(isVerified: boolean, uid: string) {

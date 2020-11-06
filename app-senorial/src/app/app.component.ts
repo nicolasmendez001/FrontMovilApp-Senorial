@@ -16,7 +16,6 @@ import { Storage } from '@ionic/storage';
 export class AppComponent {
 
   showSplash = true;
-  userName: string = "";
 
   public appPages = [
     {
@@ -56,9 +55,6 @@ export class AppComponent {
   ) {
     this.menuCtrl.enable(true);
     this.initializeApp();
-    this.storage.get('user').then((value) => {
-      this.userName = value.nombre + " " + value.apellido;
-    });
   }
 
   initializeApp() {

@@ -23,6 +23,7 @@ export class ServiceComponent implements OnInit {
   public serviceData: ModelService;
   public services: any;
   private userData: ModelUser;
+  selectColabor: boolean;
 
   constructor(private modalCtrl: ModalController, private pickerCtrl: PickerController,
     private serviceUser: UserService, private serviceSer: ServiceService, private alertController: AlertController,
@@ -46,6 +47,11 @@ export class ServiceComponent implements OnInit {
     }).catch(() => {
       // login de nuevo
     });
+    if (this.dataModal.id == 2) {
+      this.selectColabor = true;
+    } else {
+      this.selectColabor = false;
+    }
   }
 
   private loadServices(id_category: number) {
@@ -152,7 +158,7 @@ export class ServiceComponent implements OnInit {
         {
           text: 'Guardar',
           cssClass: 'special-done',
-          handler: (value: any): void => { cancel = false },
+          handler: () => { cancel = false },
         }
 
       ],
@@ -166,7 +172,7 @@ export class ServiceComponent implements OnInit {
 
     let picker = await this.pickerCtrl.create(ops);
     picker.present();
-    picker.onDidDismiss().then(async data => {
+    picker.onDidDismiss().then(async () => {
       let col = await picker.getColumn('direction');
       if (!cancel) {
         this.serviceData.direccion = col.options[col.selectedIndex].text;
@@ -227,10 +233,44 @@ export class ServiceComponent implements OnInit {
   }
 
   public isValid(): boolean {
-    return (this.serviceData.direccion == "" || this.serviceData.tipoServicio == "" || this.serviceData.horario == "");
+    return (this.serviceData.direccion == "" || this.serviceData.tipoServicio == null || this.serviceData.horario == "");
   }
 
   public next() {
+    this.presentConform(this.formatCost(this.serviceData.tipoServicio.valor));
+  }
+
+  private formatCost(cost: string): string {
+    this.serviceData.valor = parseInt(cost) * this.serviceData.nColaboradores;
+    return new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP" }).format(parseInt(cost) * this.serviceData.nColaboradores);
+  }
+
+  async presentConform(cost: string) {
+    const alert = await this.alertController.create(
+      {
+        header: 'Confirmar',
+        subHeader: 'El costo del servicio es de: ' + cost,
+        message: '¿Desea realizar el servicio?',
+        buttons: [
+          {
+            text: 'No',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: () => {
+              this.alert.presentToast("La petición del servicio ha sido cancelada", "danger");
+            }
+          }, {
+            text: 'SI',
+            handler: () => {
+              this.saveDataService(cost);
+            }
+          }
+        ]
+      });
+    await alert.present();
+  }
+
+  private saveDataService(cost: string) {
     this.serviceSer.saveService(this.serviceData).subscribe(
       () => {
         this.alert.presentSaveService("Servicio enviado",
