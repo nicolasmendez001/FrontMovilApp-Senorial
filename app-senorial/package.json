@@ -34,7 +34,7 @@
     "cordova-sqlite-storage": "^4.0.0",
     "core-js": "^2.6.11",
     "firebase": "^7.14.2",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "ngx-socket-io": "^3.0.1",
     "phonegap-plugin-multidex": "^1.0.0",
     "rxjs": "^6.5.4",
